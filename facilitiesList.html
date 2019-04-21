@@ -1,0 +1,292 @@
+<html><head>
+  <meta charset="utf-8">
+  <title>Correct Solutions | Select Facility</title>
+  <link href="/favicon.ico" type="image/x-icon" rel="icon"><link href="/favicon.ico" type="image/x-icon" rel="shortcut icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Correct Solutions Portal">
+  <meta name="author" content="NEWROCKIT, LLC">
+
+  <!--Styling-->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/bootstrap-responsive.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/portal.css">
+  <link rel="stylesheet" href="/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/bootstrap-datepicker.css">
+  <link rel="stylesheet" href="/css/order.css">
+  <!-- /.Styling-->
+
+  <!--Font-->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600" rel="stylesheet" type="text/css">
+
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <!--Scripts-->
+  <script async="" src="https://www.google-analytics.com/analytics.js"></script><script src="/js/jquery.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/bootstrap-datepicker.min.js"></script>
+  <script src="/js/footer.js"></script>
+  <script src="/js/order.js"></script>
+  <script src="/js/creditCardValidator.js"></script>
+
+  <!-- /.Scripts-->
+  <script type="text/javascript" src="chrome-extension://aadgmnobpdmgmigaicncghmmoeflnamj/ng-inspector.js"></script></head>
+<body cz-shortcut-listen="true">
+<div id="wrap">
+  <nav class="navbar navbar-default" id="header-nav">
+    <div class="container">
+      <div class="row">
+        <div class="container-fluid">
+          <div class="navbar-header col-md-4">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <div class="span3"><a class="brand" href="#"><img src="/img/csg_logo.png" style="width:240px;"></a></div>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse col-md-8" style="padding-left:70px;">
+            <ul class="nav navbar-nav">
+              <li><a href="/">Home</a></li>
+              <li><a href="/products">Products &amp; Services</a></li>
+              <li><a href="/facilities">Facilities</a></li>
+              <li><a href="/support">Support</a></li>
+              <li><a href="/contact">Contact</a></li>
+              <li><a href="/portal">Customer Portal</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i><span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/portal">Portal</a></li>
+                  <li><a href="/order/select-facility">Deposit Funds</a></li>
+                  <li><a href="/portal/transactions">Transactions</a></li>
+                  <li><a href="/portal/view">View Profile</a></li>
+                  <li><a href="/portal/resetPassword">Reset Password</a></li>
+                  <li><a href="/portal/logout">Logout</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="col-lg-3 hidden-xs hidden-sm">
+      <br>
+      <nav class="navbar navbar-default sidebar" role="navigation">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="/portal/">Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Profile <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a>
+                <ul class="dropdown-menu forAnimate" role="menu">
+                  <li><a href="/portal/view">View</a></li>
+                  <li><a href="/portal/update-profile">Change Email</a></li>
+                  <li><a href="/portal/reset-password">Reset Password</a></li>
+                </ul>
+              </li>
+              <li><a href="/order/select-facility">Deposit Funds<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a></li>
+              <li><a href="/portal/transactions">Order History<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-tags"></span></a></li>
+              <li><a href="/portal/logout">Log Out<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-log-out"></span></a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+      <br>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="stepwizard">
+            <div class="stepwizard-row">
+              <div class="stepwizard-step">
+                <button type="button" class="btn btn-primary btn-circle">1</button>
+                <p>Facility</p>
+              </div>
+              <div class="stepwizard-step">
+                <button type="button" class="btn btn-default btn-circle" disabled="disabled">2</button>
+                <p>Product</p>
+              </div>
+              <div class="stepwizard-step">
+                <button type="button" class="btn btn-default btn-circle" disabled="disabled">3</button>
+                <p>Options</p>
+              </div>
+              <div class="stepwizard-step">
+                <button type="button" class="btn btn-default btn-circle" disabled="disabled">4</button>
+                <p>Payment</p>
+              </div>
+              <div class="stepwizard-step">
+                <button type="button" class="btn btn-default btn-circle" disabled="disabled">5</button>
+                <p>Confirm</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">Search Facilities</div>
+            <div class="panel-body">
+              <form method="get" accept-charset="utf-8" class="form-inline" action="/order/select-facility/">                      <div class="form-group">
+                <label class="sr-only" for="name">Facility</label>
+                <div class="input text"><input type="text" name="name" placeholder="Facility" class="form-control" id="name" value=""></div>                      </div>
+                <div class="form-group">
+                  <label class="sr-only" for="city">City</label>
+                  <div class="input text"><input type="text" name="city" placeholder="City" class="form-control" id="city" value=""></div>                      </div>
+                <div class="form-group">
+                  <label class="sr-only" for="city">State</label>
+                  <div class="input text"><input type="text" name="state" placeholder="state" class="form-control" id="state" value=""></div>                      </div>
+                &nbsp;
+                <button type="submit" class="btn btn-success">Search Facilities</button>
+                &nbsp;
+                <a href="/order/select-facility"><button type="button" class="btn btn-danger">Reset Search</button></a>
+              </form>                </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><i class="fa fa-building fa-fw"></i> Facilities</h3>
+            </div>
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                  <thead>
+                  <tr>
+                    <th>Select Facility
+                    </th><th>Facility Name</th>
+                    <th>City</th>
+                    <th>State</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td><a href="#" onclick="confirmFacility('65')"><button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#confirmModal"><span class="glyphicon glyphicon-ok"></span>&nbsp;</button></a></td>
+                    <td>Avoyelles Correctional Center DC3</td>
+                    <td>Cottonport</td>
+                    <td>LA</td>
+                  </tr>
+                  <tr>
+                    <td><a href="#" onclick="confirmFacility('63')"><button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#confirmModal"><span class="glyphicon glyphicon-ok"></span>&nbsp;</button></a></td>
+                    <td>Avoyelles Parish Detention Marksville DC1</td>
+                    <td>Marksville</td>
+                    <td>LA</td>
+                  </tr>
+                  <tr>
+                    <td><a href="#" onclick="confirmFacility('6')"><button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#confirmModal"><span class="glyphicon glyphicon-ok"></span>&nbsp;</button></a></td>
+                    <td>Bayou Dorcheat Correctional Center</td>
+                    <td>Minden</td>
+                    <td>LA</td>
+                  </tr>
+                  <tr>
+                    <td><a href="#" onclick="confirmFacility('8')"><button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#confirmModal"><span class="glyphicon glyphicon-ok"></span>&nbsp;</button></a></td>
+                    <td>Ben Hill County Jail</td>
+                    <td>Fitzgerald</td>
+                    <td>GA</td>
+                  </tr>
+                  <tr>
+                    <td><a href="#" onclick="confirmFacility('9')"><button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#confirmModal"><span class="glyphicon glyphicon-ok"></span>&nbsp;</button></a></td>
+                    <td>Benton County Jail</td>
+                    <td>Bentonville</td>
+                    <td>AR</td>
+                  </tr>
+                  <tr>
+                    <td><a href="#" onclick="confirmFacility('10')"><button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#confirmModal"><span class="glyphicon glyphicon-ok"></span>&nbsp;</button></a></td>
+                    <td>Bowie County Correctional</td>
+                    <td>Texarkana</td>
+                    <td>TX</td>
+                  </tr>
+                  <tr>
+                    <td><a href="#" onclick="confirmFacility('54')"><button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#confirmModal"><span class="glyphicon glyphicon-ok"></span>&nbsp;</button></a></td>
+                    <td>Bowie Recovery Center</td>
+                    <td>Texarkana</td>
+                    <td>TX</td>
+                  </tr>
+                  <tr>
+                    <td><a href="#" onclick="confirmFacility('58')"><button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#confirmModal"><span class="glyphicon glyphicon-ok"></span>&nbsp;</button></a></td>
+                    <td>Caldwell Parish Detention Center</td>
+                    <td>Grayson</td>
+                    <td>LA</td>
+                  </tr>
+                  <tr>
+                    <td><a href="#" onclick="confirmFacility('12')"><button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#confirmModal"><span class="glyphicon glyphicon-ok"></span>&nbsp;</button></a></td>
+                    <td>Catahoula Correctional Center</td>
+                    <td>Harrisonburg</td>
+                    <td>LA</td>
+                  </tr>
+                  <tr>
+                    <td><a href="#" onclick="confirmFacility('7')"><button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#confirmModal"><span class="glyphicon glyphicon-ok"></span>&nbsp;</button></a></td>
+                    <td>Claiborne Parish Detention Center</td>
+                    <td>Homer</td>
+                    <td>LA</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="text-right">
+                <ul class="pagination pagination-large">
+                  <li class="prev disabled"><a href="" onclick="return false;"><i class="fa fa-chevron-left"></i></a></li><li class="active"><a href="">1</a></li><li><a href="/order/select-facility?page=2">2</a></li><li><a href="/order/select-facility?page=3">3</a></li><li class="next"><a rel="next" href="/order/select-facility?page=2"><i class="fa fa-chevron-right"></i></a></li>                        </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+              <h4 class="modal-title" id="confirmLabel">Confirm</h4>
+            </div>
+            <div id="confirmInfo">
+              <br>
+              <div class="row">
+                <div class="col-lg-4 col-offset-6 text-center">
+                  <i class="fa fa-circle-o-notch fa-spin fa-3x" aria-hidden="true"></i>
+                </div>
+              </div>
+              <br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer id="footer">
+    <div class="container">
+      <div class="footer">
+        <div class="row">
+          <div class="col-lg-4">powered by <a href="http://www.newrockit.com">newrockit</a>  <br></div>
+          <div class="col-lg-4"><a href="https://goo.gl/XLceQq"><img width="100px" src="/img/appstore.png"></a><a href="https://goo.gl/JdcXKX"><img width="115px" src="/img/playstore.png"></a> <br></div>
+          <div class="col-lg-4 pull-right"><a href="/privacy">Privacy Statement</a><br><br></div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-86024235-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+
+</div></body></html>

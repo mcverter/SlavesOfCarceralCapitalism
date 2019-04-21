@@ -1,0 +1,299 @@
+<html><head>
+    <meta charset="utf-8">
+    <title>Correct Solutions | Select Inmate</title>
+    <link href="/favicon.ico" type="image/x-icon" rel="icon"><link href="/favicon.ico" type="image/x-icon" rel="shortcut icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Correct Solutions Portal">
+    <meta name="author" content="NEWROCKIT, LLC">
+
+    <!--Styling-->
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/bootstrap-responsive.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/portal.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/css/order.css">
+    <!-- /.Styling-->
+
+    <!--Font-->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!--Scripts-->
+    <script async="" src="https://www.google-analytics.com/analytics.js"></script><script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap-datepicker.min.js"></script>
+    <script src="/js/footer.js"></script>
+    <script src="/js/order.js"></script>
+    <script src="/js/creditCardValidator.js"></script>
+
+    <!-- /.Scripts-->
+    <script type="text/javascript" src="chrome-extension://aadgmnobpdmgmigaicncghmmoeflnamj/ng-inspector.js"></script></head>
+<body cz-shortcut-listen="true">
+<div id="wrap">
+    <nav class="navbar navbar-default" id="header-nav">
+        <div class="container">
+            <div class="row">
+                <div class="container-fluid">
+                    <div class="navbar-header col-md-4">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <div class="span3"><a class="brand" href="#"><img src="/img/csg_logo.png" style="width:240px;"></a></div>
+                    </div>
+                    <div id="navbar" class="navbar-collapse collapse col-md-8" style="padding-left:70px;">
+                        <ul class="nav navbar-nav">
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/products">Products &amp; Services</a></li>
+                            <li><a href="/facilities">Facilities</a></li>
+                            <li><a href="/support">Support</a></li>
+                            <li><a href="/contact">Contact</a></li>
+                            <li><a href="/portal">Customer Portal</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i><span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/portal">Portal</a></li>
+                                    <li><a href="/order/select-facility">Deposit Funds</a></li>
+                                    <li><a href="/portal/transactions">Transactions</a></li>
+                                    <li><a href="/portal/view">View Profile</a></li>
+                                    <li><a href="/portal/resetPassword">Reset Password</a></li>
+                                    <li><a href="/portal/logout">Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="col-lg-3 hidden-xs hidden-sm">
+            <br>
+            <nav class="navbar navbar-default sidebar" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="/portal/">Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Profile <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a>
+                                <ul class="dropdown-menu forAnimate" role="menu">
+                                    <li><a href="/portal/view">View</a></li>
+                                    <li><a href="/portal/update-profile">Change Email</a></li>
+                                    <li><a href="/portal/reset-password">Reset Password</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="/order/select-facility">Deposit Funds<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a></li>
+                            <li><a href="/portal/transactions">Order History<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-tags"></span></a></li>
+                            <li><a href="/portal/logout">Log Out<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-log-out"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="stepwizard">
+                        <div class="stepwizard-row">
+                            <div class="stepwizard-step">
+                                <a href="/order/select-facility"><button type="button" class="btn btn-default btn-circle">1</button></a>
+                                <p>Facility</p>
+                            </div>
+                            <div class="stepwizard-step">
+                                <a href="/order/facility/73/select-product"><button type="button" class="btn btn-default btn-circle">2</button></a>
+                                <p>Product</p>
+                            </div>
+                            <div class="stepwizard-step">
+                                <button type="button" class="btn btn-primary btn-circle" disabled="disabled">3</button>
+                                <p>Options</p>
+                            </div>
+                            <div class="stepwizard-step">
+                                <button type="button" class="btn btn-default btn-circle" disabled="disabled">4</button>
+                                <p>Payment</p>
+                            </div>
+                            <div class="stepwizard-step">
+                                <button type="button" class="btn btn-default btn-circle" disabled="disabled">5</button>
+                                <p>Confirm</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Search Inmates</div>
+                        <div class="panel-body">
+                            <form method="get" accept-charset="utf-8" class="form-inline" action="/order/facility/73/product/2/select-inmate">                      <div class="form-group">
+                                <label class="sr-only" for="name">First Name</label>
+                                <div class="input text"><input type="text" name="fname" placeholder="first name" class="form-control" id="fname" value=""></div>                      </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="name">Last Name</label>
+                                    <div class="input text"><input type="text" name="lname" placeholder="last name" class="form-control" id="lname" value=""></div>                      </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="dob">Date of Birth</label>
+                                    <div class="input text"><input type="text" name="dob" placeholder="dob" class="form-control" id="dob" value=""></div>                      </div>
+                                &nbsp;
+                                <button type="submit" class="btn btn-success">Search Inmates</button>
+                                &nbsp;
+                                <a href="/order/facility/73/product/2/select-inmate"><button type="button" class="btn btn-danger">Reset Search</button></a>
+                            </form>                </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-users fa-fw"></i> Inmates</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Select Inmate
+                                        </th><th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>DOB</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td><a href="#" onclick="confirmInmate('833559')"><button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#confirmModal"><span class="glyphicon glyphicon-ok"></span>&nbsp;</button></a></td>
+                                        <td>DOLORES</td>
+                                        <td>ABRAJAN-GONZALEZ</td>
+                                        <td>1964-03-20</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#" onclick="confirmInmate('821891')"><button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#confirmModal"><span class="glyphicon glyphicon-ok"></span>&nbsp;</button></a></td>
+                                        <td>PEDRO</td>
+                                        <td>ACEVEDO-FRAGOSO</td>
+                                        <td>1987-08-05</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#" onclick="confirmInmate('835800')"><button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#confirmModal"><span class="glyphicon glyphicon-ok"></span>&nbsp;</button></a></td>
+                                        <td>REMOSE</td>
+                                        <td>ACHU</td>
+                                        <td>1988-06-19</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#" onclick="confirmInmate('791678')"><button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#confirmModal"><span class="glyphicon glyphicon-ok"></span>&nbsp;</button></a></td>
+                                        <td>ROGELIO</td>
+                                        <td>ACHUTIGUI-SANDOVAL</td>
+                                        <td>1977-04-15</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#" onclick="confirmInmate('835361')"><button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#confirmModal"><span class="glyphicon glyphicon-ok"></span>&nbsp;</button></a></td>
+                                        <td>BRENDA</td>
+                                        <td>AGUILAR-GONZALEZ</td>
+                                        <td>1995-12-26</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#" onclick="confirmInmate('817076')"><button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#confirmModal"><span class="glyphicon glyphicon-ok"></span>&nbsp;</button></a></td>
+                                        <td>SALOMON</td>
+                                        <td>AGUILAR-HERNANDEZ</td>
+                                        <td>1988-09-02</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#" onclick="confirmInmate('839031')"><button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#confirmModal"><span class="glyphicon glyphicon-ok"></span>&nbsp;</button></a></td>
+                                        <td>ALBERTO</td>
+                                        <td>AGUILAR-JAVIER</td>
+                                        <td>1978-07-30</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#" onclick="confirmInmate('835825')"><button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#confirmModal"><span class="glyphicon glyphicon-ok"></span>&nbsp;</button></a></td>
+                                        <td>EMMA</td>
+                                        <td>AGUILAR-QUIROZ</td>
+                                        <td>1985-10-08</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#" onclick="confirmInmate('814794')"><button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#confirmModal"><span class="glyphicon glyphicon-ok"></span>&nbsp;</button></a></td>
+                                        <td>MARIO</td>
+                                        <td>AISPURO-AISPURO</td>
+                                        <td>1963-01-18</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#" onclick="confirmInmate('814961')"><button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#confirmModal"><span class="glyphicon glyphicon-ok"></span>&nbsp;</button></a></td>
+                                        <td>VICTOR</td>
+                                        <td>AISPURO-BUENO</td>
+                                        <td>1994-02-25</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-right">
+                                <ul class="pagination pagination-large">
+                                    <li class="prev disabled"><a href="" onclick="return false;"><i class="fa fa-chevron-left"></i></a></li><li class="active"><a href="">1</a></li><li><a href="/order/select-inmate?page=2">2</a></li><li><a href="/order/select-inmate?page=3">3</a></li><li class="next"><a rel="next" href="/order/select-inmate?page=2"><i class="fa fa-chevron-right"></i></a></li>                        </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title" id="confirmLabel">Confirm</h4>
+                        </div>
+                        <div id="confirmInfo">
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-4 col-offset-6 text-center">
+                                    <i class="fa fa-circle-o-notch fa-spin fa-3x" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                  $('#dob').datepicker({
+                    autoclose: true,
+                    format: "yyyy-mm-dd"
+                  });
+                </script>
+            </div>
+        </div>
+    </div>
+    <footer id="footer">
+        <div class="container">
+            <div class="footer">
+                <div class="row">
+                    <div class="col-lg-4">powered by <a href="http://www.newrockit.com">newrockit</a>  <br></div>
+                    <div class="col-lg-4"><a href="https://goo.gl/XLceQq"><img width="100px" src="/img/appstore.png"></a><a href="https://goo.gl/JdcXKX"><img width="115px" src="/img/playstore.png"></a> <br></div>
+                    <div class="col-lg-4 pull-right"><a href="/privacy">Privacy Statement</a><br><br></div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-86024235-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+
+</div></body></html>
