@@ -19,39 +19,50 @@ const Promise = require("bluebird");
 
     async processFacility() {
       let self = this;
+      console.log('processing facility', self.name, self.number)
       await login();
-      //      let driver = await new Builder().forBrowser('chrome').build();
-      await ( driver.get(`https://csgpay.com/order/select-facility?page=${this.pageNum}`));
-      let list = await driver.findElements(By.tagName("tr"));
-      let buttons = await driver.findElements(By.className("glyphicon glyphicon-ok"));
 
-      if (list.length === buttons.length + 1) {
-        list.shift();
-      }
-      let trs = await Promise.all(list.map(item => {
-        let outerHtml = item.getAttribute("outerHTML");
-        return outerHtml;
-      }));
+      /* Go to right facility list page */
+  await ( driver.get(`https://csgpay.com/order/select-facility?page=${this.pageNum}`));
+
+      /* Click on the right facility */
+      let buttons = await driver.findElements(By.className("glyphicon glyphicon-ok"));
+      let list = await driver.findElements(By.tagName("tr"));
+      if (list.length === buttons.length + 1) {list.shift();}
+      let trs = await Promise.all(list.map(item => item.getAttribute("outerHTML")));
       let matchFacilityString = trs.filter(e=>e.match(`'${self.number}'`))[0];
       let clickIndex = trs.indexOf(matchFacilityString);
       await buttons[clickIndex].click();
 
+      /* Confirm Facility */
       await driver.wait(until.elementLocated(By.className("modal-dialog")))
       let continueButton = await driver.wait(until.elementLocated(By.linkText("Continue")))
       await continueButton.click();
 
-      let yellowPanel = await driver.wait(until.elementLocated(By.className("panel-yellow")))
+      /* Click on Product #1 */
       let selectButtons = await driver.wait(until.elementsLocated(By.className("fa-arrow-circle-right")));
-      selectButtons[1].click();
+      selectButtons[0].click();
 
+      /* pick deposit amount */
       let depositAmount = await driver.wait(until.elementLocated(By.name("deposit")))
       await depositAmount.sendKeys('3')
       let continueDeposit = await driver.wait(until.elementLocated(By.className("btn-success")));
       continueDeposit.click();
 
+      /* confirm deposit amount */
       await driver.wait(until.elementLocated(By.className("modal-dialog")));
       let continueButton2 = await driver.wait(until.elementLocated(By.linkText("Continue")));
       await continueButton2.click();
+
+      /* pick pre-paid collect phone */
+      let collectPhoneButton = await driver.wait(until.elementLocated(By.className("funkyradio-primary")));
+      await collectPhoneButton.click();
+
+      /* confirm phone */
+      await driver.wait(until.elementLocated(By.className("modal-dialog")));
+      let continueButton3 = await driver.wait(until.elementLocated(By.linkText("Continue")));
+      await continueButton3.click();
+
 
       await getNextInmatePage(1, self.name);
     }
