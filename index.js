@@ -17,6 +17,43 @@ const Promise = require("bluebird");
       this.homepage = `https://csgpay.com/order/facility/${number}/product/2/select-inmate`
     }
 
+    async hitModalContinueButton() {
+      await driver.wait(until.elementLocated(By.className("modal-dialog")))
+      let continueButton = await driver.wait(until.elementLocated(By.linkText("Continue")))
+      await continueButton.click();
+    }
+
+    async chooseRedProduct() {
+      /* Click on Product #1 */
+      let selectButtons = await driver.wait(until.elementsLocated(By.className("fa-arrow-circle-right")));
+      selectButtons[0].click();
+
+      /* pick deposit amount */
+      let depositAmount = await driver.wait(until.elementLocated(By.name("deposit")))
+      await depositAmount.sendKeys('3')
+      let continueDeposit = await driver.wait(until.elementLocated(By.className("btn-success")));
+      continueDeposit.click();
+
+      /* confirm deposit amount */
+      await this.hitModalContinueButton();
+
+      /* pick pre-paid collect phone */
+      let collectPhoneButton = await driver.wait(until.elementLocated(By.className("funkyradio-primary")));
+      await collectPhoneButton.click();
+
+      /* confirm phone */
+      await this.hitModalContinueButton();
+
+    }
+
+    async chooseYellowProduct() {
+
+    }
+
+    async chooseGreenProduct() {
+
+    }
+
     async processFacility() {
       let self = this;
       console.log('processing facility', self.name, self.number)
@@ -35,34 +72,9 @@ const Promise = require("bluebird");
       await buttons[clickIndex].click();
 
       /* Confirm Facility */
-      await driver.wait(until.elementLocated(By.className("modal-dialog")))
-      let continueButton = await driver.wait(until.elementLocated(By.linkText("Continue")))
-      await continueButton.click();
+      await this.hitModalContinueButton();
 
-      /* Click on Product #1 */
-      let selectButtons = await driver.wait(until.elementsLocated(By.className("fa-arrow-circle-right")));
-      selectButtons[0].click();
-
-      /* pick deposit amount */
-      let depositAmount = await driver.wait(until.elementLocated(By.name("deposit")))
-      await depositAmount.sendKeys('3')
-      let continueDeposit = await driver.wait(until.elementLocated(By.className("btn-success")));
-      continueDeposit.click();
-
-      /* confirm deposit amount */
-      await driver.wait(until.elementLocated(By.className("modal-dialog")));
-      let continueButton2 = await driver.wait(until.elementLocated(By.linkText("Continue")));
-      await continueButton2.click();
-
-      /* pick pre-paid collect phone */
-      let collectPhoneButton = await driver.wait(until.elementLocated(By.className("funkyradio-primary")));
-      await collectPhoneButton.click();
-
-      /* confirm phone */
-      await driver.wait(until.elementLocated(By.className("modal-dialog")));
-      let continueButton3 = await driver.wait(until.elementLocated(By.linkText("Continue")));
-      await continueButton3.click();
-
+      await this.chooseRedProduct()
 
       await getNextInmatePage(1, self.name);
     }
