@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/mcverter/SlavesOfCarceralCapitalism#readme",
   "dependencies": {
+    "bluebird": "^3.5.4",
     "selenium-webdriver": "^4.0.0-alpha.1"
   }
 }

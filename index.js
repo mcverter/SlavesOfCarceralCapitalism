@@ -1,12 +1,11 @@
 const {Builder, By, Key, until} = require('selenium-webdriver');
-
+const Promise = require("bluebird");
 
 (async function crawlCorrectSolutions() {
 
-
-
+  let driver;
   let allFacilities = [];
-
+  let allInmates = [];
 
   class Facility {
     constructor(number,name,city,state, pageNum) {
@@ -19,16 +18,42 @@ const {Builder, By, Key, until} = require('selenium-webdriver');
     }
 
     async processFacility() {
-//      let driver = await new Builder().forBrowser('chrome').build();
-      await driver.navigate(`https://csgpay.com/order/select-facility?page=${this.pageNum}`);
+      let self = this;
+      await login();
+      //      let driver = await new Builder().forBrowser('chrome').build();
+      await ( driver.get(`https://csgpay.com/order/select-facility?page=${this.pageNum}`));
       let list = await driver.findElements(By.tagName("tr"));
       let buttons = await driver.findElements(By.className("glyphicon glyphicon-ok"));
 
-      console.log(list, buttons);
-    let matchFacilityString = list.filter(e=>e.match(`'${facility.number}'`))[0];
-    let clickIndex = list.indexOf(matchFacilityString);
-    return await buttons[clickIndex].click();
-      // return null;
+      if (list.length === buttons.length + 1) {
+        list.shift();
+      }
+      let trs = await Promise.all(list.map(item => {
+        let outerHtml = item.getAttribute("outerHTML");
+        return outerHtml;
+      }));
+      let matchFacilityString = trs.filter(e=>e.match(`'${self.number}'`))[0];
+      let clickIndex = trs.indexOf(matchFacilityString);
+      await buttons[clickIndex].click();
+
+      await driver.wait(until.elementLocated(By.className("modal-dialog")))
+      let continueButton = await driver.wait(until.elementLocated(By.linkText("Continue")))
+      await continueButton.click();
+
+      let yellowPanel = await driver.wait(until.elementLocated(By.className("panel-yellow")))
+      let selectButtons = await driver.wait(until.elementsLocated(By.className("fa-arrow-circle-right")));
+      selectButtons[1].click();
+
+      let depositAmount = await driver.wait(until.elementLocated(By.name("deposit")))
+      await depositAmount.sendKeys('3')
+      let continueDeposit = await driver.wait(until.elementLocated(By.className("btn-success")));
+      continueDeposit.click();
+
+      await driver.wait(until.elementLocated(By.className("modal-dialog")));
+      let continueButton2 = await driver.wait(until.elementLocated(By.linkText("Continue")));
+      await continueButton2.click();
+
+      await getNextInmatePage(1, self.name);
     }
 
     print() {
@@ -37,7 +62,26 @@ const {Builder, By, Key, until} = require('selenium-webdriver');
   }
 
   class Inmate {
-    constructor(facilityNumber,first,last,dob) {}
+    constructor(first,last,dob, facility) {
+      this.first = first;
+      this.last = last;
+      this.dob = dob;
+      this.facility = facility;
+    }
+
+    print() {
+      console.log(`${this.first}\t${this.last}\t${this.dob}\t${this.facility}`)
+    }
+  }
+
+  function createNewInmate(rawHtml, facility) {
+    if (rawHtml.match("Select Inmate")) {
+      return null;
+    } else {
+      let regex = /<tr>.*\n\s*<td>(.*)<.*\n\s*<td>(.*)<.*\n\s*<td>(.*)<.*\n\s*<td>(.*)</;
+      let [, , first, last, dob] = rawHtml.match(regex);
+      return new Inmate(first, last, dob, facility);
+    }
   }
 
   function createNewFacility(rawHtml, pageNum) {
@@ -49,9 +93,6 @@ const {Builder, By, Key, until} = require('selenium-webdriver');
       return new Facility(number,name,city,state, pageNum);
     }
   }
-
-
-
 
   async function processFacilityListPage(pageNum) {
     let pageFacilities = [];
@@ -73,11 +114,54 @@ const {Builder, By, Key, until} = require('selenium-webdriver');
     return trs;
   }
 
-  async function getNextInmatePage(pageNum) {}
+  async function processInmateListPage(pageNum, facilityName) {
 
-  async function getNextFacilityPage(pageNum) {
+    let list = await driver.findElements(By.tagName("tr"));
+
+    let trs = await Promise.all(list.map(item => {
+      let outerHtml = item.getAttribute("outerHTML");
+      return outerHtml;
+    }));
+    trs.forEach(async function(tr) {
+      let i = createNewInmate(tr, facilityName);
+      if (i) {
+        allInmates.push(i);
+      }
+    });
+
+    return trs;
+  }
+
+  async function getNextInmatePage(pageNum, facilityName) {
+    await driver.get(`https://csgpay.com/order/select-inmate?page=${pageNum}`);
+
+    let right = await driver.findElement(By.className("fa-chevron-right"))
+      .catch(err=>{});
+
+    await processInmateListPage(pageNum, facilityName);
+
+    let grandparentElement = await right.findElement(By.xpath("./../.."));
+    let grandparentClass = await grandparentElement.getAttribute("class");
+    if (!grandparentClass.match("disabled")) {
+      getNextInmatePage(pageNum+1, facilityName)
+    } else {
+      console.log(`\n\n**************************************`);
+      console.log(`Here are the inmates in ${facilityName}`);
+      console.log(`**************************************\n`);
+
+      allInmates.forEach(i => i.print());
+      driver.quit();
+      allInmates = allInmates.slice(0, 0);
+      let facilityWithInmates = allFacilities.shift();
+      if (facilityWithInmates) {
+        await facilityWithInmates.processFacility();
+      }
+    }
+  }
+
+  async function getNextFacilityPage(pageNum, recursive) {
     await driver.get(`https://csgpay.com/order/select-facility?page=${pageNum}`);
-    //let right = await driver.findElement(By.css(".fa-chevron-right"))
+
     let right = await driver.findElement(By.className("fa-chevron-right"))
       .catch(err=>{
         allFacilities = allFacilities.filter(f=>f!=null);
@@ -87,40 +171,36 @@ const {Builder, By, Key, until} = require('selenium-webdriver');
           //return driver.get(facility.homepage);
         }))});
 
+    await processFacilityListPage(pageNum);
+
     let grandparentElement = await right.findElement(By.xpath("./../.."));
     let grandparentClass = await grandparentElement.getAttribute("class");
-
     if (!grandparentClass.match("disabled")) {
-      await processFacilityListPage(pageNum);
-      await getNextFacilityPage(pageNum+1);
+      if (recursive) {
+        await getNextFacilityPage(pageNum + 1, true);
+      }
     } else {
-      console.log(`There are ${pageNum} facility pages`);
+      console.log(`\n\n**************************************`);
       console.log("Here are the facilities:");
-      Promise.all(allFacilities.map(async function(f) {
-          console.log('process facility in promise map')
-          await f.processFacility()
-        }
-      ))
-      allFacilities.forEach(async function(f) {
-        console.log('process facility in for each')
-//        await f.processFacility()
-      });
+      console.log(`**************************************\n`);
+      allFacilities.forEach(f=>{f.print()});
 
-      allFacilities.forEach(f=>{
-        f.print()
-      })
+//      allFacilities = allFacilities.slice(0,1);
+      driver.quit();
+      let facilityWithInmates = allFacilities.shift();
+      await facilityWithInmates.processFacility();
     }
   }
 
-  // main
-  let driver = await new Builder().forBrowser('chrome').build();
-  try {
+  async function login() {
+    driver = await new Builder().forBrowser('chrome').build();
     await driver.get('https://csgpay.com/account/login');
     await driver.findElement(By.css("input[type='email']")).sendKeys('mitchell.verter@gmail.com');
     await driver.findElement(By.css("input[type='password']")).sendKeys('olga');
     await driver.findElement(By.css("input[type='submit']")).click();
-    await getNextFacilityPage(1)
-  } finally {
-//    await driver.quit();
   }
+  // main
+  await login();
+  await getNextFacilityPage(1, true)
+
 })();
