@@ -43,11 +43,19 @@ const Promise = require("bluebird");
 
       /* confirm phone */
       await this.hitModalContinueButton();
-
     }
 
     async chooseYellowProduct() {
+      let yellowPanel = await driver.wait(until.elementLocated(By.className("panel-yellow")))
+      let selectButtons = await driver.wait(until.elementsLocated(By.className("fa-arrow-circle-right")));
+      selectButtons[1].click();
 
+      let depositAmount = await driver.wait(until.elementLocated(By.name("deposit")))
+      await depositAmount.sendKeys('3')
+      let continueDeposit = await driver.wait(until.elementLocated(By.className("btn-success")));
+      continueDeposit.click();
+
+      await this.hitModalContinueButton();
     }
 
     async chooseGreenProduct() {
@@ -60,7 +68,7 @@ const Promise = require("bluebird");
       await login();
 
       /* Go to right facility list page */
-  await ( driver.get(`https://csgpay.com/order/select-facility?page=${this.pageNum}`));
+      await ( driver.get(`https://csgpay.com/order/select-facility?page=${this.pageNum}`));
 
       /* Click on the right facility */
       let buttons = await driver.findElements(By.className("glyphicon glyphicon-ok"));
@@ -74,7 +82,28 @@ const Promise = require("bluebird");
       /* Confirm Facility */
       await this.hitModalContinueButton();
 
-      await this.chooseRedProduct()
+      /* figure our what panels we have and their color */
+      let panels = await driver.wait(until.elementsLocated(By.className("panel")));
+
+      let firstPanelClass = await panels[0].getAttribute("class");
+
+      if (firstPanelClass.match("panel-yellow")) {
+        console.log("first panel is yellow");
+        await this.chooseYellowProduct()
+
+      } else if (firstPanelClass.match("panel-red")) {
+        /* pick first button */
+        console.log("first panel is red");
+        await this.chooseRedProduct()
+      } else if (firstPanelClass.match("panel-green")) {
+        /* pick first button */
+        console.error("first panel is green.  no path yet");
+//        await this.chooseRedProduct()
+      } else {
+        console.error("no product found???")
+      }
+
+
 
       await getNextInmatePage(1, self.name);
     }
