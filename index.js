@@ -203,10 +203,10 @@ const Promise = require("bluebird");
 
     driver.quit();
 
-    let TEST_NUM = 33;
+    let TEST_NUM;
     if (TEST_NUM) {
 //      allFacilities = allFacilities.filter(f => f.number === "" + TEST_NUM);
-      allFacilities = allFacilities.slice(allFacilities.findIndex(f=>f.number === ""+TEST_NUM))
+//      allFacilities = allFacilities.slice(allFacilities.findIndex(f=>f.number === ""+TEST_NUM))
     }
 
     // find inmates
