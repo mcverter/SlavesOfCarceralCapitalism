@@ -3,3 +3,4 @@ foo*
 node_modules/
 *lock
 *log
+notes.txt
