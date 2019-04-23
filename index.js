@@ -19,15 +19,18 @@ const Promise = require("bluebird");
     }
 
     async hitModalContinueButton() {
-      await driver.wait(until.elementLocated(By.className("modal-dialog")))
-      let continueButton = await driver.wait(until.elementLocated(By.linkText("Continue")))
+      /* Wait for a long time before pressing button */
+//      await driver.sleep(250);
+      let modal = await driver.wait(until.elementIsVisible(driver.wait(until.elementLocated(By.className("modal-dialog")))));
+      let continueButton = await driver.wait(until.elementIsVisible(driver.wait(until.elementLocated(By.linkText("Continue")))));
+      // let continueButton = modal.findElement(By.linkText("Continue"));
       await continueButton.click();
     }
 
     async chooseRedProduct() {
       /* Click on Product #1 */
-      let selectButtons = await driver.wait(until.elementsLocated(By.className("fa-arrow-circle-right")));
-      selectButtons[0].click();
+      let selectButton = await driver.wait(until.elementLocated(By.className("fa-arrow-circle-right")));
+      selectButton.click();
 
       /* pick deposit amount */
       let depositAmount = await driver.wait(until.elementLocated(By.name("deposit")))
@@ -47,8 +50,8 @@ const Promise = require("bluebird");
     }
 
     async chooseYellowOrGreenProduct() {
-      let selectButtons = await driver.wait(until.elementsLocated(By.className("fa-arrow-circle-right")));
-      selectButtons[0].click();
+      let selectButton = await driver.wait(until.elementLocated(By.className("fa-arrow-circle-right")));
+      selectButton.click();
 
       let depositAmount = await driver.wait(until.elementLocated(By.name("deposit")))
       await depositAmount.sendKeys('3')
@@ -60,7 +63,7 @@ const Promise = require("bluebird");
 
     async findInmatesInFacility() {
       let self = this;
-      console.log('processing facility', self.name, self.number)
+
       await login();
 
       /* Go to correct facility list page */
@@ -82,7 +85,6 @@ const Promise = require("bluebird");
       let panels = await driver.wait(until.elementsLocated(By.className("panel")));
 
       let firstPanelClass = await panels[0].getAttribute("class");
-      console.log('first panel class is', firstPanelClass);
 
       if (firstPanelClass.match("panel-yellow") ||
           firstPanelClass.match("panel-green")) {
@@ -135,6 +137,7 @@ const Promise = require("bluebird");
   }
 
   async function extractFacilitiesFromListPage(pageNum) {
+    await driver.sleep(2000);
     let list = await driver.findElements(By.tagName("tr"));
     let buttons = await driver.findElements(By.className("glyphicon glyphicon-ok"));
     let trs = await Promise.all(list.map(item => {
@@ -212,7 +215,6 @@ const Promise = require("bluebird");
     // find inmates
     let facilityWithInmates = allFacilities.shift();
     await facilityWithInmates.findInmatesInFacility();
-
   }
   async function gotoFacilityListPage(pageNum, recursive) {
     await driver.get(`https://csgpay.com/order/select-facility?page=${pageNum}`);
