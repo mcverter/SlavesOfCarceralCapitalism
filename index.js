@@ -1,4 +1,5 @@
 const {Builder, By, Key, until} = require('selenium-webdriver');
+const chrome = require('selenium-webdriver/chrome');
 const Promise = require("bluebird");
 
 (async function crawlCorrectSolutions() {
@@ -30,7 +31,7 @@ const Promise = require("bluebird");
 
       /* pick deposit amount */
       let depositAmount = await driver.wait(until.elementLocated(By.name("deposit")))
-      await depositAmount.sendKeys('3')
+      await depositAmount.sendKeys('3');
       let continueDeposit = await driver.wait(until.elementLocated(By.className("btn-success")));
       continueDeposit.click();
 
@@ -45,10 +46,9 @@ const Promise = require("bluebird");
       await this.hitModalContinueButton();
     }
 
-    async chooseYellowProduct() {
-      let yellowPanel = await driver.wait(until.elementLocated(By.className("panel-yellow")))
+    async chooseYellowOrGreenProduct() {
       let selectButtons = await driver.wait(until.elementsLocated(By.className("fa-arrow-circle-right")));
-      selectButtons[1].click();
+      selectButtons[0].click();
 
       let depositAmount = await driver.wait(until.elementLocated(By.name("deposit")))
       await depositAmount.sendKeys('3')
@@ -58,19 +58,15 @@ const Promise = require("bluebird");
       await this.hitModalContinueButton();
     }
 
-    async chooseGreenProduct() {
-
-    }
-
-    async processFacility() {
+    async findInmatesInFacility() {
       let self = this;
       console.log('processing facility', self.name, self.number)
       await login();
 
-      /* Go to right facility list page */
+      /* Go to correct facility list page */
       await ( driver.get(`https://csgpay.com/order/select-facility?page=${this.pageNum}`));
 
-      /* Click on the right facility */
+      /* Click on the button corresonding to this facility */
       let buttons = await driver.findElements(By.className("glyphicon glyphicon-ok"));
       let list = await driver.findElements(By.tagName("tr"));
       if (list.length === buttons.length + 1) {list.shift();}
@@ -86,26 +82,18 @@ const Promise = require("bluebird");
       let panels = await driver.wait(until.elementsLocated(By.className("panel")));
 
       let firstPanelClass = await panels[0].getAttribute("class");
+      console.log('first panel class is', firstPanelClass);
 
-      if (firstPanelClass.match("panel-yellow")) {
-        console.log("first panel is yellow");
-        await this.chooseYellowProduct()
-
+      if (firstPanelClass.match("panel-yellow") ||
+          firstPanelClass.match("panel-green")) {
+        await this.chooseYellowOrGreenProduct()
       } else if (firstPanelClass.match("panel-red")) {
-        /* pick first button */
-        console.log("first panel is red");
         await this.chooseRedProduct()
-      } else if (firstPanelClass.match("panel-green")) {
-        /* pick first button */
-        console.error("first panel is green.  no path yet");
-//        await this.chooseRedProduct()
       } else {
-        console.error("no product found???")
+        console.error("ERROR: no product found???")
       }
 
-
-
-      await getNextInmatePage(1, self.name);
+      await gotoInmateListPage(1, self.name);
     }
 
     print() {
@@ -127,7 +115,7 @@ const Promise = require("bluebird");
   }
 
   function createNewInmate(rawHtml, facility) {
-    if (rawHtml.match("Select Inmate")) {
+    if (!rawHtml || rawHtml.match("Select Inmate")) {
       return null;
     } else {
       let regex = /<tr>.*\n\s*<td>(.*)<.*\n\s*<td>(.*)<.*\n\s*<td>(.*)<.*\n\s*<td>(.*)</;
@@ -146,9 +134,7 @@ const Promise = require("bluebird");
     }
   }
 
-  async function processFacilityListPage(pageNum) {
-    let pageFacilities = [];
-
+  async function extractFacilitiesFromListPage(pageNum) {
     let list = await driver.findElements(By.tagName("tr"));
     let buttons = await driver.findElements(By.className("glyphicon glyphicon-ok"));
     let trs = await Promise.all(list.map(item => {
@@ -158,16 +144,13 @@ const Promise = require("bluebird");
     trs.forEach(async function(tr) {
       let f = createNewFacility(tr, pageNum);
       if (f) {
-//        await processFacility(f, trs, buttons, pageNum);
-        pageFacilities.push(f);
         allFacilities.push(f);
       }
     });
     return trs;
   }
 
-  async function processInmateListPage(pageNum, facilityName) {
-
+  async function extractInmatesFromListPage(pageNum, facilityName) {
     let list = await driver.findElements(By.tagName("tr"));
 
     let trs = await Promise.all(list.map(item => {
@@ -184,18 +167,18 @@ const Promise = require("bluebird");
     return trs;
   }
 
-  async function getNextInmatePage(pageNum, facilityName) {
+  async function gotoInmateListPage(pageNum, facilityName) {
     await driver.get(`https://csgpay.com/order/select-inmate?page=${pageNum}`);
 
     let right = await driver.findElement(By.className("fa-chevron-right"))
       .catch(err=>{});
 
-    await processInmateListPage(pageNum, facilityName);
+    await extractInmatesFromListPage(pageNum, facilityName);
 
     let grandparentElement = await right.findElement(By.xpath("./../.."));
     let grandparentClass = await grandparentElement.getAttribute("class");
     if (!grandparentClass.match("disabled")) {
-      getNextInmatePage(pageNum+1, facilityName)
+      gotoInmateListPage(pageNum+1, facilityName)
     } else {
       console.log(`\n\n**************************************`);
       console.log(`Here are the inmates in ${facilityName}`);
@@ -206,53 +189,67 @@ const Promise = require("bluebird");
       allInmates = allInmates.slice(0, 0);
       let facilityWithInmates = allFacilities.shift();
       if (facilityWithInmates) {
-        await facilityWithInmates.processFacility();
+        await facilityWithInmates.findInmatesInFacility();
       }
     }
   }
 
-  async function getNextFacilityPage(pageNum, recursive) {
+  async function handleLastFacilityListPage() {
+    /* Last Page Reached. Print Results */
+    console.log(`\n\n**************************************`);
+    console.log("Here are the facilities:");
+    console.log(`**************************************\n`);
+    allFacilities.forEach(f=>{f.print()});
+
+    driver.quit();
+
+    let TEST_NUM = 33;
+    if (TEST_NUM) {
+//      allFacilities = allFacilities.filter(f => f.number === "" + TEST_NUM);
+      allFacilities = allFacilities.slice(allFacilities.findIndex(f=>f.number === ""+TEST_NUM))
+    }
+
+    // find inmates
+    let facilityWithInmates = allFacilities.shift();
+    await facilityWithInmates.findInmatesInFacility();
+
+  }
+  async function gotoFacilityListPage(pageNum, recursive) {
     await driver.get(`https://csgpay.com/order/select-facility?page=${pageNum}`);
 
     let right = await driver.findElement(By.className("fa-chevron-right"))
-      .catch(err=>{
-        allFacilities = allFacilities.filter(f=>f!=null);
-        Promise.all(allFacilities.map(facility=>{
-          console.log('process facility in catch')
-//          facility.processFacility()
-          //return driver.get(facility.homepage);
-        }))});
+      .catch(err=>{});
 
-    await processFacilityListPage(pageNum);
+    await extractFacilitiesFromListPage(pageNum);
 
     let grandparentElement = await right.findElement(By.xpath("./../.."));
     let grandparentClass = await grandparentElement.getAttribute("class");
     if (!grandparentClass.match("disabled")) {
       if (recursive) {
-        await getNextFacilityPage(pageNum + 1, true);
+        await gotoFacilityListPage(pageNum + 1, true);
       }
     } else {
-      console.log(`\n\n**************************************`);
-      console.log("Here are the facilities:");
-      console.log(`**************************************\n`);
-      allFacilities.forEach(f=>{f.print()});
-
-//      allFacilities = allFacilities.slice(0,1);
-      driver.quit();
-      let facilityWithInmates = allFacilities.shift();
-      await facilityWithInmates.processFacility();
+      await handleLastFacilityListPage();
     }
   }
 
+  const screen = {
+    width: 640,
+    height: 480
+  };
+
   async function login() {
-    driver = await new Builder().forBrowser('chrome').build();
+    driver = await new Builder()
+      .forBrowser('chrome')
+     // .setChromeOptions(new chrome.Options().headless().windowSize(screen))
+      .build();
     await driver.get('https://csgpay.com/account/login');
     await driver.findElement(By.css("input[type='email']")).sendKeys('mitchell.verter@gmail.com');
     await driver.findElement(By.css("input[type='password']")).sendKeys('olga');
     await driver.findElement(By.css("input[type='submit']")).click();
   }
-  // main
-  await login();
-  await getNextFacilityPage(1, true)
 
+  /* main */
+  await login();
+  await gotoFacilityListPage(1, true)
 })();
