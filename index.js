@@ -87,7 +87,7 @@ const Promise = require("bluebird");
       let firstPanelClass = await panels[0].getAttribute("class");
 
       if (firstPanelClass.match("panel-yellow") ||
-          firstPanelClass.match("panel-green")) {
+        firstPanelClass.match("panel-green")) {
         await this.chooseYellowOrGreenProduct()
       } else if (firstPanelClass.match("panel-red")) {
         await this.chooseRedProduct()
@@ -95,12 +95,20 @@ const Promise = require("bluebird");
         console.error("ERROR: no product found???")
       }
 
-      await gotoInmateListPage(1, self.name);
+      let facilityInfo = `${self.name} (${self.city}, ${self.state})`
+      await gotoInmateListPage(1, facilityInfo);
     }
 
     print() {
       console.log(`${this.name}\t${this.city}\t${this.state}`)
     }
+    printHTML() {
+      console.log(`<tr><td>${this.name}</td><td>${this.city}</td><td>${this.state}</td></tr>`)
+    }
+    printJSON(){
+      console.log(`{"name": "${this.name}", city: "${this.city}", state: "${this.state}"}`)
+    }
+
   }
 
   class Inmate {
@@ -114,6 +122,14 @@ const Promise = require("bluebird");
     print() {
       console.log(`${this.first}\t${this.last}\t${this.dob}\t${this.facility}`)
     }
+    printHTML() {
+      console.log(`<tr><td>${this.first}</td><td>${this.last}</td><td>${this.dob}</td><td>${this.facility}</td></tr>`)
+    }
+
+    printJSON(){
+      console.log(`{"first": "${this.first}", "last": "${this.last}", "dob": "${this.dob}", "facility": "${this.facility}"}`)
+    }
+
   }
 
   function createNewInmate(rawHtml, facility) {
@@ -153,7 +169,8 @@ const Promise = require("bluebird");
     return trs;
   }
 
-  async function extractInmatesFromListPage(pageNum, facilityName) {
+  async function extractInmatesFromListPage(pageNum, facilityInfo) {
+    console.log(`extracting inmates from ${facilityInfo} on page ${pageNum}`)
     let list = await driver.findElements(By.tagName("tr"));
 
     let trs = await Promise.all(list.map(item => {
@@ -161,7 +178,7 @@ const Promise = require("bluebird");
       return outerHtml;
     }));
     trs.forEach(async function(tr) {
-      let i = createNewInmate(tr, facilityName);
+      let i = createNewInmate(tr, facilityInfo);
       if (i) {
         allInmates.push(i);
       }
@@ -170,24 +187,24 @@ const Promise = require("bluebird");
     return trs;
   }
 
-  async function gotoInmateListPage(pageNum, facilityName) {
+  async function gotoInmateListPage(pageNum, facilityInfo) {
     await driver.get(`https://csgpay.com/order/select-inmate?page=${pageNum}`);
 
     let right = await driver.findElement(By.className("fa-chevron-right"))
       .catch(err=>{});
 
-    await extractInmatesFromListPage(pageNum, facilityName);
+    await extractInmatesFromListPage(pageNum, facilityInfo);
 
     let grandparentElement = await right.findElement(By.xpath("./../.."));
     let grandparentClass = await grandparentElement.getAttribute("class");
     if (!grandparentClass.match("disabled")) {
-      gotoInmateListPage(pageNum+1, facilityName)
+      gotoInmateListPage(pageNum+1, facilityInfo)
     } else {
-      console.log(`\n\n**************************************`);
-      console.log(`Here are the inmates in ${facilityName}`);
-      console.log(`**************************************\n`);
+      console.log(`\n\n======================================`);
+      console.log(`Here are the inmates in ${facilityInfo}`);
+      console.log(`======================================\n`);
 
-      allInmates.forEach(i => i.print());
+      allInmates.forEach(i => i.printJSON());
       driver.quit();
       allInmates = allInmates.slice(0, 0);
       let facilityWithInmates = allFacilities.shift();
@@ -199,17 +216,17 @@ const Promise = require("bluebird");
 
   async function handleLastFacilityListPage() {
     /* Last Page Reached. Print Results */
-    console.log(`\n\n**************************************`);
+    console.log(`\n\n======================================`);
     console.log("Here are the facilities:");
-    console.log(`**************************************\n`);
-    allFacilities.forEach(f=>{f.print()});
+    console.log(`======================================\n`);
+    allFacilities.forEach(f=>{f.printJSON()});
 
     driver.quit();
 
-    let TEST_NUM;
-    if (TEST_NUM) {
-//      allFacilities = allFacilities.filter(f => f.number === "" + TEST_NUM);
-//      allFacilities = allFacilities.slice(allFacilities.findIndex(f=>f.number === ""+TEST_NUM))
+    let TEST_VALUE = "Jackson Parish Correctional Center - Phase 1";
+    if (TEST_VALUE) {
+//      allFacilities = allFacilities.filter(f => f.number === "" + TEST_VALUE);
+      allFacilities = allFacilities.slice(allFacilities.findIndex(f=>f.name === ""+TEST_VALUE))
     }
 
     // find inmates
@@ -243,7 +260,7 @@ const Promise = require("bluebird");
   async function login() {
     driver = await new Builder()
       .forBrowser('chrome')
-     // .setChromeOptions(new chrome.Options().headless().windowSize(screen))
+//      .setChromeOptions(new chrome.Options().headless().windowSize(screen))
       .build();
     await driver.get('https://csgpay.com/account/login');
     await driver.findElement(By.css("input[type='email']")).sendKeys('mitchell.verter@gmail.com');
