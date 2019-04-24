@@ -1,4 +1,4 @@
-let getInmates = function getInmates(){return[{"first": "ADRIANE", "last": "OLVERA", "dob": "1985-08-13", "facility": "Van Zandt County (Canton, TX)"},
+let inmates17 = function inmates17(){return[{"first": "ADRIANE", "last": "OLVERA", "dob": "1985-08-13", "facility": "Van Zandt County (Canton, TX)"},
 {"first": "ZACHARY", "last": "PALMER", "dob": "1990-07-26", "facility": "Van Zandt County (Canton, TX)"},
 {"first": "RUSSELL", "last": "PARTIN", "dob": "1993-02-28", "facility": "Van Zandt County (Canton, TX)"},
 {"first": "MATTHEW", "last": "PASLEY", "dob": "1977-09-04", "facility": "Van Zandt County (Canton, TX)"},
@@ -1997,4 +1997,4 @@ let getInmates = function getInmates(){return[{"first": "ADRIANE", "last": "OLVE
 {"first": "HECTOR", "last": "BALDERAMOS AVILAS", "dob": "1988-01-05", "facility": "West Texas Detention Center (Sierra Blanca, TX)"},
 {"first": "SEBASTIAN", "last": "BALTAZAR-JUAN", "dob": "1999-09-20", "facility": "West Texas Detention Center (Sierra Blanca, TX)"},
 {"first": "JOSE", "last": "BARNADA-HORTA", "dob": "1996-01-13", "facility": "West Texas Detention Center (Sierra Blanca, TX)"},
-{"first": "SALVADOR", "last": "BAROCIO GARIBAY", "dob": "1987-03-01", "facility": "West Texas Detention Center (Sierra Blanca, TX)"},]};Array.prototype.push.apply(window.allInmates, getInmates())
+{"first": "SALVADOR", "last": "BAROCIO GARIBAY", "dob": "1987-03-01", "facility": "West Texas Detention Center (Sierra Blanca, TX)"},]};Array.prototype.push.apply(window.allInmates, inmates17());

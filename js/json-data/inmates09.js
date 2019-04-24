@@ -1,4 +1,4 @@
-let getInmates = function getInmates(){return[{"first": "MALCOM", "last": "MUSE", "dob": "1996-08-28", "facility": "Madison JV4 (Southern Corr) (Tallulah, LA)"},
+let inmates09 = function inmates09(){return[{"first": "MALCOM", "last": "MUSE", "dob": "1996-08-28", "facility": "Madison JV4 (Southern Corr) (Tallulah, LA)"},
 {"first": "BRANDON", "last": "MYLES", "dob": "1985-03-17", "facility": "Madison JV4 (Southern Corr) (Tallulah, LA)"},
 {"first": "KENDALL", "last": "MYLES", "dob": "1977-07-10", "facility": "Madison JV4 (Southern Corr) (Tallulah, LA)"},
 {"first": "TONY J", "last": "NAQUIN", "dob": "1995-01-01", "facility": "Madison JV4 (Southern Corr) (Tallulah, LA)"},
@@ -1997,4 +1997,4 @@ let getInmates = function getInmates(){return[{"first": "MALCOM", "last": "MUSE"
 {"first": "ASHLEY NICOLE", "last": "NOBLE", "dob": "1978-07-31", "facility": "McIntosh County Jail (Darien, GA)"},
 {"first": "ERIC DEAN", "last": "PADGETT", "dob": "1987-06-26", "facility": "McIntosh County Jail (Darien, GA)"},
 {"first": "SADRICK DONTE", "last": "PALMER", "dob": "1980-07-04", "facility": "McIntosh County Jail (Darien, GA)"},
-{"first": "ROBERT BRUCE", "last": "PARKER", "dob": "1963-08-23", "facility": "McIntosh County Jail (Darien, GA)"},]};Array.prototype.push.apply(window.allInmates, getInmates())
+{"first": "ROBERT BRUCE", "last": "PARKER", "dob": "1963-08-23", "facility": "McIntosh County Jail (Darien, GA)"},]};Array.prototype.push.apply(window.allInmates, inmates09());

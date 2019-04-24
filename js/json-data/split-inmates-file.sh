@@ -2,13 +2,14 @@
 
 split -d -l 2000 April22AllInmates.json "inmates"
 
-startfile="let getInmates = function getInmates(){return["
-endfile="]};Array.prototype.push.apply(window.allInmates, getInmates());"
 
 for f in `ls`
 do
     if [[ "$f" =~ ^inmate* ]] && ! [[ "$f" =~ .js$ ]]
     then
+        startfile="let $f = function $f(){return["
+        endfile="]};Array.prototype.push.apply(window.allInmates, $f());"
+
         contents=`cat $f`
         if [ -e "$f.js" ]
         then

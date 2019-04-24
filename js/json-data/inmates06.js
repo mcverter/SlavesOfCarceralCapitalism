@@ -1,4 +1,4 @@
-let getInmates = function getInmates(){return[{"first": "YANEL OSVALDO", "last": "CASTILLO PANTOJA", "dob": "1976-03-03", "facility": "Jackson Parish Correctional Center - Phase 2 (Jonesboro, LA)"},
+let inmates06 = function inmates06(){return[{"first": "YANEL OSVALDO", "last": "CASTILLO PANTOJA", "dob": "1976-03-03", "facility": "Jackson Parish Correctional Center - Phase 2 (Jonesboro, LA)"},
 {"first": "ARNOLD CRISTOFERZON", "last": "CASTILLO-DIAZ", "dob": "1992-06-02", "facility": "Jackson Parish Correctional Center - Phase 2 (Jonesboro, LA)"},
 {"first": "WILLIANS DAVID", "last": "CASTILLO-PEREZ", "dob": "1995-12-05", "facility": "Jackson Parish Correctional Center - Phase 2 (Jonesboro, LA)"},
 {"first": "MARCARIO DE JESUS", "last": "CASTILLO-TORREZ", "dob": "1987-03-17", "facility": "Jackson Parish Correctional Center - Phase 2 (Jonesboro, LA)"},
@@ -1997,4 +1997,4 @@ let getInmates = function getInmates(){return[{"first": "YANEL OSVALDO", "last":
 {"first": "KARTEAU OMAR", "last": "JENKINS", "dob": "1977-06-04", "facility": "Liberty County Jail (Hinesville, GA)"},
 {"first": "LEVY LEWIS", "last": "JENKINS", "dob": "1983-07-23", "facility": "Liberty County Jail (Hinesville, GA)"},
 {"first": "LOVIE LAMAR", "last": "JENKINS", "dob": "1984-08-29", "facility": "Liberty County Jail (Hinesville, GA)"},
-{"first": "ROBERT LEE", "last": "JENNINGS", "dob": "1986-03-12", "facility": "Liberty County Jail (Hinesville, GA)"},]};Array.prototype.push.apply(window.allInmates, getInmates())
+{"first": "ROBERT LEE", "last": "JENNINGS", "dob": "1986-03-12", "facility": "Liberty County Jail (Hinesville, GA)"},]};Array.prototype.push.apply(window.allInmates, inmates06());

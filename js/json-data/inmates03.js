@@ -1,4 +1,4 @@
-let getInmates = function getInmates(){return[{"first": "STEVEN WAYNE", "last": "HURST", "dob": "1983-08-12", "facility": "Crawford County Jail (Van Buren, AR)"},
+let inmates03 = function inmates03(){return[{"first": "STEVEN WAYNE", "last": "HURST", "dob": "1983-08-12", "facility": "Crawford County Jail (Van Buren, AR)"},
 {"first": "DAWN D", "last": "ICHTERTZ", "dob": "1988-09-07", "facility": "Crawford County Jail (Van Buren, AR)"},
 {"first": "ZACHARY TYLER", "last": "IMEL", "dob": "1994-01-08", "facility": "Crawford County Jail (Van Buren, AR)"},
 {"first": "HEATHER LOENA", "last": "JACK", "dob": "1986-07-24", "facility": "Crawford County Jail (Van Buren, AR)"},
@@ -1997,4 +1997,4 @@ let getInmates = function getInmates(){return[{"first": "STEVEN WAYNE", "last": 
 {"first": "CHENG", "last": "LIU", "dob": "1973-08-21", "facility": "Franklin Parish Detention Center (Winnsboro, LA)"},
 {"first": "ALVIN S", "last": "LIVELY", "dob": "1974-02-18", "facility": "Franklin Parish Detention Center (Winnsboro, LA)"},
 {"first": "CANDICE NICOLE", "last": "LIVELY", "dob": "1979-05-21", "facility": "Franklin Parish Detention Center (Winnsboro, LA)"},
-{"first": "VERNELL D", "last": "LOCKETT", "dob": "1995-12-06", "facility": "Franklin Parish Detention Center (Winnsboro, LA)"},]};Array.prototype.push.apply(window.allInmates, getInmates())
+{"first": "VERNELL D", "last": "LOCKETT", "dob": "1995-12-06", "facility": "Franklin Parish Detention Center (Winnsboro, LA)"},]};Array.prototype.push.apply(window.allInmates, inmates03());

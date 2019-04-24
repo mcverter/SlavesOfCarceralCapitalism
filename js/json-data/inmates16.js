@@ -1,4 +1,4 @@
-let getInmates = function getInmates(){return[{"first": "LUTHER", "last": "GOWER", "dob": "1973-08-08", "facility": "Tulsa - David L. Moss (Tulsa, OK)"},
+let inmates16 = function inmates16(){return[{"first": "LUTHER", "last": "GOWER", "dob": "1973-08-08", "facility": "Tulsa - David L. Moss (Tulsa, OK)"},
 {"first": "LEONORA JAMESON", "last": "GRADY", "dob": "1970-01-01", "facility": "Tulsa - David L. Moss (Tulsa, OK)"},
 {"first": "PERCY RHIANNA", "last": "GRADY", "dob": "1970-01-01", "facility": "Tulsa - David L. Moss (Tulsa, OK)"},
 {"first": "THALIA ORLANDO", "last": "GRADY", "dob": "1970-01-01", "facility": "Tulsa - David L. Moss (Tulsa, OK)"},
@@ -1997,4 +1997,4 @@ let getInmates = function getInmates(){return[{"first": "LUTHER", "last": "GOWER
 {"first": "REGINALD", "last": "MORRISON", "dob": "1992-07-07", "facility": "Van Zandt County (Canton, TX)"},
 {"first": "JUSTIN", "last": "MORSE", "dob": "1986-09-01", "facility": "Van Zandt County (Canton, TX)"},
 {"first": "TRACY", "last": "ODELL", "dob": "1980-08-14", "facility": "Van Zandt County (Canton, TX)"},
-{"first": "ROBERT", "last": "OFEROSKY", "dob": "1989-08-16", "facility": "Van Zandt County (Canton, TX)"},]};Array.prototype.push.apply(window.allInmates, getInmates())
+{"first": "ROBERT", "last": "OFEROSKY", "dob": "1989-08-16", "facility": "Van Zandt County (Canton, TX)"},]};Array.prototype.push.apply(window.allInmates, inmates16());

@@ -1,4 +1,4 @@
-let getInmates = function getInmates(){return[{"first": "ADRIANA", "last": "VIELMA-CASTILLO", "dob": "1984-04-21", "facility": "San Luis Regional Detention Center (San Luis, AZ)"},
+let inmates14 = function inmates14(){return[{"first": "ADRIANA", "last": "VIELMA-CASTILLO", "dob": "1984-04-21", "facility": "San Luis Regional Detention Center (San Luis, AZ)"},
 {"first": "SERGIO", "last": "VILLAFANA-ESPINOSA", "dob": "1973-06-22", "facility": "San Luis Regional Detention Center (San Luis, AZ)"},
 {"first": "JOSE", "last": "VILLANUEVA-LOPEZ", "dob": "1994-01-22", "facility": "San Luis Regional Detention Center (San Luis, AZ)"},
 {"first": "HECTOR", "last": "VILLASENOR-RIVERA", "dob": "1985-09-12", "facility": "San Luis Regional Detention Center (San Luis, AZ)"},
@@ -1997,4 +1997,4 @@ let getInmates = function getInmates(){return[{"first": "ADRIANA", "last": "VIEL
 {"first": "ANGELA RHEA", "last": "DALLIES", "dob": "1976-09-05", "facility": "Taylor County Detention (Abilene, TX)"},
 {"first": "DAVID HERNANDEZ", "last": "DAMIAN", "dob": "1984-09-28", "facility": "Taylor County Detention (Abilene, TX)"},
 {"first": "JUSTIN MARQUISE", "last": "DANIEL", "dob": "1988-04-20", "facility": "Taylor County Detention (Abilene, TX)"},
-{"first": "RICHARD EARL", "last": "DANIELS", "dob": "1980-12-23", "facility": "Taylor County Detention (Abilene, TX)"},]};Array.prototype.push.apply(window.allInmates, getInmates())
+{"first": "RICHARD EARL", "last": "DANIELS", "dob": "1980-12-23", "facility": "Taylor County Detention (Abilene, TX)"},]};Array.prototype.push.apply(window.allInmates, inmates14());

@@ -1,4 +1,4 @@
-let getInmates = function getInmates(){return[{"first": "JACOBY", "last": "ROSS", "dob": "1995-05-03", "facility": "Catahoula Correctional Center (Harrisonburg, LA)"},
+let inmates02 = function inmates02(){return[{"first": "JACOBY", "last": "ROSS", "dob": "1995-05-03", "facility": "Catahoula Correctional Center (Harrisonburg, LA)"},
 {"first": "KENNETH", "last": "ROWE (JOBBERS)", "dob": "1978-12-21", "facility": "Catahoula Correctional Center (Harrisonburg, LA)"},
 {"first": "EZIKIEL", "last": "RUBEN", "dob": "1953-01-11", "facility": "Catahoula Correctional Center (Harrisonburg, LA)"},
 {"first": "RYAN", "last": "RUBIN", "dob": "1972-08-27", "facility": "Catahoula Correctional Center (Harrisonburg, LA)"},
@@ -1997,4 +1997,4 @@ let getInmates = function getInmates(){return[{"first": "JACOBY", "last": "ROSS"
 {"first": "PHILLIP LOUIS", "last": "HOTELLA", "dob": "1968-06-22", "facility": "Crawford County Jail (Van Buren, AR)"},
 {"first": "JESSICA ANN", "last": "HOWARD", "dob": "1994-06-08", "facility": "Crawford County Jail (Van Buren, AR)"},
 {"first": "TARA LEAH", "last": "HUFF", "dob": "1981-02-26", "facility": "Crawford County Jail (Van Buren, AR)"},
-{"first": "JUSTIN LEE", "last": "HUNTER", "dob": "1981-09-04", "facility": "Crawford County Jail (Van Buren, AR)"},]};Array.prototype.push.apply(window.allInmates, getInmates())
+{"first": "JUSTIN LEE", "last": "HUNTER", "dob": "1981-09-04", "facility": "Crawford County Jail (Van Buren, AR)"},]};Array.prototype.push.apply(window.allInmates, inmates02());

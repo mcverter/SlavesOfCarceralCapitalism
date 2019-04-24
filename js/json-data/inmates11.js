@@ -1,4 +1,4 @@
-let getInmates = function getInmates(){return[{"first": "KENNETH  LOUVE", "last": "JACKSON", "dob": "1969-12-31", "facility": "Ouachita Correctional Center (Monroe, LA)"},
+let inmates11 = function inmates11(){return[{"first": "KENNETH  LOUVE", "last": "JACKSON", "dob": "1969-12-31", "facility": "Ouachita Correctional Center (Monroe, LA)"},
 {"first": "KEVIN", "last": "JACKSON", "dob": "1992-07-28", "facility": "Ouachita Correctional Center (Monroe, LA)"},
 {"first": "LAKIRA", "last": "JACKSON", "dob": "1992-07-09", "facility": "Ouachita Correctional Center (Monroe, LA)"},
 {"first": "LESTER", "last": "JACKSON", "dob": "1972-08-12", "facility": "Ouachita Correctional Center (Monroe, LA)"},
@@ -1997,4 +1997,4 @@ let getInmates = function getInmates(){return[{"first": "KENNETH  LOUVE", "last"
 {"first": "Maurice", "last": "Richard", "dob": "1970-12-02", "facility": "Prairieland Detention Center (Alvarado, TX)"},
 {"first": "Junior", "last": "Ricketts", "dob": "1955-10-12", "facility": "Prairieland Detention Center (Alvarado, TX)"},
 {"first": "Ruben", "last": "Rico", "dob": "1981-10-13", "facility": "Prairieland Detention Center (Alvarado, TX)"},
-{"first": "Estefania", "last": "Rios", "dob": "1992-09-12", "facility": "Prairieland Detention Center (Alvarado, TX)"},]};Array.prototype.push.apply(window.allInmates, getInmates())
+{"first": "Estefania", "last": "Rios", "dob": "1992-09-12", "facility": "Prairieland Detention Center (Alvarado, TX)"},]};Array.prototype.push.apply(window.allInmates, inmates11());

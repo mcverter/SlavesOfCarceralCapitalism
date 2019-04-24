@@ -1,4 +1,4 @@
-let getInmates = function getInmates(){return[  {"first": "AMANDA", "last": "ADAMS", "dob": "1979-10-18", "facility": "Avoyelles Correctional Center DC3 (Cottonport, LA)"},
+let inmates00 = function inmates00(){return[  {"first": "AMANDA", "last": "ADAMS", "dob": "1979-10-18", "facility": "Avoyelles Correctional Center DC3 (Cottonport, LA)"},
   {"first": "VICTORIA", "last": "ALFRED", "dob": "1987-03-12", "facility": "Avoyelles Correctional Center DC3 (Cottonport, LA)"},
   {"first": "TOSHIBA", "last": "ANCAR", "dob": "1982-02-18", "facility": "Avoyelles Correctional Center DC3 (Cottonport, LA)"},
   {"first": "GABRIELA", "last": "ANGUIANO", "dob": "1988-08-12", "facility": "Avoyelles Correctional Center DC3 (Cottonport, LA)"},
@@ -1997,4 +1997,4 @@ let getInmates = function getInmates(){return[  {"first": "AMANDA", "last": "ADA
   {"first": "CHEYENNE N", "last": "BURKHART", "dob": "1996-10-01", "facility": "Bowie County Correctional (Texarkana, TX)"},
   {"first": "GARY T", "last": "BURNETT", "dob": "1993-09-09", "facility": "Bowie County Correctional (Texarkana, TX)"},
   {"first": "JAMES B", "last": "BURNETT", "dob": "1971-12-31", "facility": "Bowie County Correctional (Texarkana, TX)"},
-  {"first": "FRED", "last": "BURNS", "dob": "1959-04-14", "facility": "Bowie County Correctional (Texarkana, TX)"},]};Array.prototype.push.apply(window.allInmates, getInmates())
+  {"first": "FRED", "last": "BURNS", "dob": "1959-04-14", "facility": "Bowie County Correctional (Texarkana, TX)"},]};Array.prototype.push.apply(window.allInmates, inmates00());

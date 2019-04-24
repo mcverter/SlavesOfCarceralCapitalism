@@ -1,4 +1,4 @@
-let getInmates = function getInmates(){return[{"first": "BRICE ANTONIO", "last": "DAVIS", "dob": "1998-09-10", "facility": "Taylor County Detention (Abilene, TX)"},
+let inmates15 = function inmates15(){return[{"first": "BRICE ANTONIO", "last": "DAVIS", "dob": "1998-09-10", "facility": "Taylor County Detention (Abilene, TX)"},
 {"first": "CEDRIK LEMAR", "last": "DAVIS", "dob": "1990-12-23", "facility": "Taylor County Detention (Abilene, TX)"},
 {"first": "CHRISTOPHER DAMONTEZ", "last": "DAVIS", "dob": "1996-10-06", "facility": "Taylor County Detention (Abilene, TX)"},
 {"first": "JAYKECIA SHIANIQUE", "last": "DAVIS", "dob": "2000-11-28", "facility": "Taylor County Detention (Abilene, TX)"},
@@ -1997,4 +1997,4 @@ let getInmates = function getInmates(){return[{"first": "BRICE ANTONIO", "last":
 {"first": "RICHARD", "last": "GORDON", "dob": "1969-11-25", "facility": "Tulsa - David L. Moss (Tulsa, OK)"},
 {"first": "RUDOLPH THOMAS", "last": "GORNIAK", "dob": "1991-06-20", "facility": "Tulsa - David L. Moss (Tulsa, OK)"},
 {"first": "WILLIAM RUSSELL", "last": "GORTMAKER", "dob": "1992-04-27", "facility": "Tulsa - David L. Moss (Tulsa, OK)"},
-{"first": "WILLIAM EARL", "last": "GOUGLER", "dob": "1964-09-23", "facility": "Tulsa - David L. Moss (Tulsa, OK)"},]};Array.prototype.push.apply(window.allInmates, getInmates())
+{"first": "WILLIAM EARL", "last": "GOUGLER", "dob": "1964-09-23", "facility": "Tulsa - David L. Moss (Tulsa, OK)"},]};Array.prototype.push.apply(window.allInmates, inmates15());

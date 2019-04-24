@@ -1,4 +1,4 @@
-let getInmates = function getInmates(){return[{"first": "CHRISTY ANN DENISE", "last": "POINTEK", "dob": "1989-04-25", "facility": "McIntosh County Jail (Darien, GA)"},
+let inmates10 = function inmates10(){return[{"first": "CHRISTY ANN DENISE", "last": "POINTEK", "dob": "1989-04-25", "facility": "McIntosh County Jail (Darien, GA)"},
 {"first": "DONIEL", "last": "PORTER", "dob": "1988-09-05", "facility": "McIntosh County Jail (Darien, GA)"},
 {"first": "MYRA ANN", "last": "PREVATT", "dob": "1986-08-20", "facility": "McIntosh County Jail (Darien, GA)"},
 {"first": "BRANDON RAY", "last": "RAND", "dob": "1995-05-23", "facility": "McIntosh County Jail (Darien, GA)"},
@@ -1997,4 +1997,4 @@ let getInmates = function getInmates(){return[{"first": "CHRISTY ANN DENISE", "l
 {"first": "JAMARVIN", "last": "JACKSON", "dob": "1991-06-02", "facility": "Ouachita Correctional Center (Monroe, LA)"},
 {"first": "JAMES", "last": "JACKSON", "dob": "1975-10-22", "facility": "Ouachita Correctional Center (Monroe, LA)"},
 {"first": "JAQUEZ", "last": "JACKSON", "dob": "2002-05-18", "facility": "Ouachita Correctional Center (Monroe, LA)"},
-{"first": "KELVIN", "last": "JACKSON", "dob": "1997-08-24", "facility": "Ouachita Correctional Center (Monroe, LA)"},]};Array.prototype.push.apply(window.allInmates, getInmates())
+{"first": "KELVIN", "last": "JACKSON", "dob": "1997-08-24", "facility": "Ouachita Correctional Center (Monroe, LA)"},]};Array.prototype.push.apply(window.allInmates, inmates10());
