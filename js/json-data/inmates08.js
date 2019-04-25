@@ -1,4 +1,4 @@
-let inmates08 = function inmates08(){return[{"first": "MARTIN", "last": "MORGAN", "dob": "1986-10-01", "facility": "Livingston Parish Detention Center (Livingston, LA)"},
+addInmatesFn = function (){return[{"first": "MARTIN", "last": "MORGAN", "dob": "1986-10-01", "facility": "Livingston Parish Detention Center (Livingston, LA)"},
 {"first": "NICHOLAS", "last": "MORGAN", "dob": "1999-07-22", "facility": "Livingston Parish Detention Center (Livingston, LA)"},
 {"first": "BRADY", "last": "MORRELL", "dob": "1993-07-26", "facility": "Livingston Parish Detention Center (Livingston, LA)"},
 {"first": "JOSHUA", "last": "MORRIS", "dob": "1987-10-11", "facility": "Livingston Parish Detention Center (Livingston, LA)"},
@@ -1997,4 +1997,4 @@ let inmates08 = function inmates08(){return[{"first": "MARTIN", "last": "MORGAN"
 {"first": "DORRELL", "last": "MOTEN", "dob": "1995-04-21", "facility": "Madison JV4 (Southern Corr) (Tallulah, LA)"},
 {"first": "LEON W", "last": "MOYE", "dob": "1975-06-20", "facility": "Madison JV4 (Southern Corr) (Tallulah, LA)"},
 {"first": "KYLE", "last": "MUNSON", "dob": "1996-01-20", "facility": "Madison JV4 (Southern Corr) (Tallulah, LA)"},
-{"first": "RICKY J", "last": "MURPHY", "dob": "1969-02-25", "facility": "Madison JV4 (Southern Corr) (Tallulah, LA)"},]};Array.prototype.push.apply(window.allInmates, inmates08());
+{"first": "RICKY J", "last": "MURPHY", "dob": "1969-02-25", "facility": "Madison JV4 (Southern Corr) (Tallulah, LA)"}]};Array.prototype.push.apply(window.allInmates, addInmatesFn());

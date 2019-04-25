@@ -1,4 +1,4 @@
-let inmates05 = function inmates05(){return[{"first": "CHRISTINA M", "last": "DRAKE", "dob": "1983-07-03", "facility": "Jack Harwell Detention Center (Waco, TX)"},
+addInmatesFn = function (){return[{"first": "CHRISTINA M", "last": "DRAKE", "dob": "1983-07-03", "facility": "Jack Harwell Detention Center (Waco, TX)"},
 {"first": "AREKA D", "last": "DUFFEY", "dob": "1995-02-20", "facility": "Jack Harwell Detention Center (Waco, TX)"},
 {"first": "KEVIN M", "last": "DUFFEY", "dob": "1981-08-14", "facility": "Jack Harwell Detention Center (Waco, TX)"},
 {"first": "DEVERI DAMON", "last": "DUKES", "dob": "1971-08-01", "facility": "Jack Harwell Detention Center (Waco, TX)"},
@@ -1997,4 +1997,4 @@ let inmates05 = function inmates05(){return[{"first": "CHRISTINA M", "last": "DR
 {"first": "GIOVANNI", "last": "CASTELLON", "dob": "1987-11-04", "facility": "Jackson Parish Correctional Center - Phase 2 (Jonesboro, LA)"},
 {"first": "JOSE OLIVIO", "last": "CASTELLON DE LA TORRE", "dob": "1992-08-11", "facility": "Jackson Parish Correctional Center - Phase 2 (Jonesboro, LA)"},
 {"first": "ALVARO ANTONIO", "last": "CASTILBLANCO", "dob": "1999-01-27", "facility": "Jackson Parish Correctional Center - Phase 2 (Jonesboro, LA)"},
-{"first": "ALTON J", "last": "CASTILLE", "dob": "1975-10-05", "facility": "Jackson Parish Correctional Center - Phase 2 (Jonesboro, LA)"},]};Array.prototype.push.apply(window.allInmates, inmates05());
+{"first": "ALTON J", "last": "CASTILLE", "dob": "1975-10-05", "facility": "Jackson Parish Correctional Center - Phase 2 (Jonesboro, LA)"}]};Array.prototype.push.apply(window.allInmates, addInmatesFn());

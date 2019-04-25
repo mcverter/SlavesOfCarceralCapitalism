@@ -1,4 +1,4 @@
-let inmates04 = function inmates04(){return[{"first": "KEVIN LEMONT", "last": "LOGAN", "dob": "1972-04-19", "facility": "Franklin Parish Detention Center (Winnsboro, LA)"},
+addInmatesFn = function (){return[{"first": "KEVIN LEMONT", "last": "LOGAN", "dob": "1972-04-19", "facility": "Franklin Parish Detention Center (Winnsboro, LA)"},
 {"first": "REMY A", "last": "LORD", "dob": "1990-02-08", "facility": "Franklin Parish Detention Center (Winnsboro, LA)"},
 {"first": "BRITTANY E.", "last": "LOTT", "dob": "1991-10-28", "facility": "Franklin Parish Detention Center (Winnsboro, LA)"},
 {"first": "RONDELL", "last": "LOVE", "dob": "1976-02-13", "facility": "Franklin Parish Detention Center (Winnsboro, LA)"},
@@ -1997,4 +1997,4 @@ let inmates04 = function inmates04(){return[{"first": "KEVIN LEMONT", "last": "L
 {"first": "FELIPE S", "last": "DIZA", "dob": "1957-11-01", "facility": "Jack Harwell Detention Center (Waco, TX)"},
 {"first": "ADRIAN", "last": "DOMINGUEZ-VIVEROS", "dob": "1978-07-06", "facility": "Jack Harwell Detention Center (Waco, TX)"},
 {"first": "BRYANT K", "last": "DOTSON", "dob": "1984-07-06", "facility": "Jack Harwell Detention Center (Waco, TX)"},
-{"first": "THOMAS J", "last": "DOWLING", "dob": "1979-02-26", "facility": "Jack Harwell Detention Center (Waco, TX)"},]};Array.prototype.push.apply(window.allInmates, inmates04());
+{"first": "THOMAS J", "last": "DOWLING", "dob": "1979-02-26", "facility": "Jack Harwell Detention Center (Waco, TX)"}]};Array.prototype.push.apply(window.allInmates, addInmatesFn());

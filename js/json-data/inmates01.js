@@ -1,4 +1,4 @@
-let inmates01 = function inmates01(){return[  {"first": "MARK A", "last": "BURNS", "dob": "1973-07-16", "facility": "Bowie County Correctional (Texarkana, TX)"},
+addInmatesFn = function (){return[  {"first": "MARK A", "last": "BURNS", "dob": "1973-07-16", "facility": "Bowie County Correctional (Texarkana, TX)"},
   {"first": "NICHOLAS P", "last": "BURRIS", "dob": "1985-05-26", "facility": "Bowie County Correctional (Texarkana, TX)"},
   {"first": "RICHARD", "last": "BURROUS", "dob": "1977-11-12", "facility": "Bowie County Correctional (Texarkana, TX)"},
   {"first": "JAMES E", "last": "BURTON", "dob": "1963-12-03", "facility": "Bowie County Correctional (Texarkana, TX)"},
@@ -1997,4 +1997,4 @@ let inmates01 = function inmates01(){return[  {"first": "MARK A", "last": "BURNS
 {"first": "JOSEPH MICHAEL", "last": "RODRIGUEZ", "dob": "1977-07-07", "facility": "Catahoula Correctional Center (Harrisonburg, LA)"},
 {"first": "KEVIN E", "last": "ROGERS", "dob": "1978-04-24", "facility": "Catahoula Correctional Center (Harrisonburg, LA)"},
 {"first": "KRISTIAN", "last": "ROME", "dob": "1995-04-18", "facility": "Catahoula Correctional Center (Harrisonburg, LA)"},
-{"first": "TORREY", "last": "ROMERO", "dob": "1979-01-07", "facility": "Catahoula Correctional Center (Harrisonburg, LA)"},]};Array.prototype.push.apply(window.allInmates, inmates01());
+{"first": "TORREY", "last": "ROMERO", "dob": "1979-01-07", "facility": "Catahoula Correctional Center (Harrisonburg, LA)"}]};Array.prototype.push.apply(window.allInmates, addInmatesFn());

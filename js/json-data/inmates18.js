@@ -1,4 +1,4 @@
-let inmates18 = function inmates18(){return[{"first": "GREGORIO", "last": "BARRERA", "dob": "1962-04-21", "facility": "West Texas Detention Center (Sierra Blanca, TX)"},
+addInmatesFn = function (){return[{"first": "GREGORIO", "last": "BARRERA", "dob": "1962-04-21", "facility": "West Texas Detention Center (Sierra Blanca, TX)"},
 {"first": "MARCELINO", "last": "BARRERA-ALVAREZ", "dob": "1949-02-19", "facility": "West Texas Detention Center (Sierra Blanca, TX)"},
 {"first": "LUIS", "last": "BARRERA-CUELLAR", "dob": "1986-01-29", "facility": "West Texas Detention Center (Sierra Blanca, TX)"},
 {"first": "ELKIS", "last": "BARRERAS PILETA", "dob": "1970-05-27", "facility": "West Texas Detention Center (Sierra Blanca, TX)"},
@@ -1997,4 +1997,4 @@ let inmates18 = function inmates18(){return[{"first": "GREGORIO", "last": "BARRE
 {"first": "MISAEL", "last": "TINOCO", "dob": "1997-09-03", "facility": "Williamson County Detention Facility (Georgetown, TX)"},
 {"first": "RACHAEL", "last": "TONCHE", "dob": "1975-08-12", "facility": "Williamson County Detention Facility (Georgetown, TX)"},
 {"first": "DAVID", "last": "TORRES", "dob": "1960-03-05", "facility": "Williamson County Detention Facility (Georgetown, TX)"},
-{"first": "SERGIO", "last": "TOVAR-SAUCEDO", "dob": "1993-01-27", "facility": "Williamson County Detention Facility (Georgetown, TX)"},]};Array.prototype.push.apply(window.allInmates, inmates18());
+{"first": "SERGIO", "last": "TOVAR-SAUCEDO", "dob": "1993-01-27", "facility": "Williamson County Detention Facility (Georgetown, TX)"}]};Array.prototype.push.apply(window.allInmates, addInmatesFn());

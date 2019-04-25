@@ -1,4 +1,4 @@
-let inmates13 = function inmates13(){return[{"first": "SHAQUILLE", "last": "RUFFIN", "dob": "1997-05-23", "facility": "Richwood Correctional Center (Monroe, LA)"},
+addInmatesFn = function (){return[{"first": "SHAQUILLE", "last": "RUFFIN", "dob": "1997-05-23", "facility": "Richwood Correctional Center (Monroe, LA)"},
 {"first": "DARWING", "last": "RUIZ-FUNEZ", "dob": "1991-11-06", "facility": "Richwood Correctional Center (Monroe, LA)"},
 {"first": "JOSE", "last": "RUIZ-ROMERO", "dob": "1995-01-06", "facility": "Richwood Correctional Center (Monroe, LA)"},
 {"first": "WILBER", "last": "SALAZAR-GARCIA", "dob": "1991-10-16", "facility": "Richwood Correctional Center (Monroe, LA)"},
@@ -1997,4 +1997,4 @@ let inmates13 = function inmates13(){return[{"first": "SHAQUILLE", "last": "RUFF
 {"first": "AXEL", "last": "VELIZ-VELIZ", "dob": "2000-02-02", "facility": "San Luis Regional Detention Center (San Luis, AZ)"},
 {"first": "ALBERTO", "last": "VENTURA-MORAN", "dob": "1963-09-25", "facility": "San Luis Regional Detention Center (San Luis, AZ)"},
 {"first": "HUMBERTO", "last": "VERA-ALVARADO", "dob": "1992-11-16", "facility": "San Luis Regional Detention Center (San Luis, AZ)"},
-{"first": "ROBENSON", "last": "VERTIDIEU", "dob": "1986-10-25", "facility": "San Luis Regional Detention Center (San Luis, AZ)"},]};Array.prototype.push.apply(window.allInmates, inmates13());
+{"first": "ROBENSON", "last": "VERTIDIEU", "dob": "1986-10-25", "facility": "San Luis Regional Detention Center (San Luis, AZ)"}]};Array.prototype.push.apply(window.allInmates, addInmatesFn());

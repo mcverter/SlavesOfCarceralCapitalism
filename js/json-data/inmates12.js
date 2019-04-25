@@ -1,4 +1,4 @@
-let inmates12 = function inmates12(){return[{"first": "Felix", "last": "Rivas Diaz", "dob": "1978-04-29", "facility": "Prairieland Detention Center (Alvarado, TX)"},
+addInmatesFn = function (){return[{"first": "Felix", "last": "Rivas Diaz", "dob": "1978-04-29", "facility": "Prairieland Detention Center (Alvarado, TX)"},
 {"first": "Karina", "last": "Rivas Valencia", "dob": "1978-09-11", "facility": "Prairieland Detention Center (Alvarado, TX)"},
 {"first": "Nick", "last": "Rivas Valerio", "dob": "2000-01-16", "facility": "Prairieland Detention Center (Alvarado, TX)"},
 {"first": "Mario", "last": "Rivera", "dob": "1986-09-18", "facility": "Prairieland Detention Center (Alvarado, TX)"},
@@ -1997,4 +1997,4 @@ let inmates12 = function inmates12(){return[{"first": "Felix", "last": "Rivas Di
 {"first": "BYRON", "last": "ROSE", "dob": "1988-03-18", "facility": "Richwood Correctional Center (Monroe, LA)"},
 {"first": "KEVIN", "last": "ROSS", "dob": "1997-10-22", "facility": "Richwood Correctional Center (Monroe, LA)"},
 {"first": "LEONARD", "last": "ROUSSELL", "dob": "1986-01-12", "facility": "Richwood Correctional Center (Monroe, LA)"},
-{"first": "ARIEL", "last": "RUANO-CORRALES", "dob": "1995-10-08", "facility": "Richwood Correctional Center (Monroe, LA)"},]};Array.prototype.push.apply(window.allInmates, inmates12());
+{"first": "ARIEL", "last": "RUANO-CORRALES", "dob": "1995-10-08", "facility": "Richwood Correctional Center (Monroe, LA)"}]};Array.prototype.push.apply(window.allInmates, addInmatesFn());

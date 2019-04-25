@@ -1,4 +1,4 @@
-let inmates19 = function inmates19(){return[{"first": "JESSE", "last": "TOWNSEND", "dob": "1992-11-15", "facility": "Williamson County Detention Facility (Georgetown, TX)"},
+addInmatesFn = function (){return[{"first": "JESSE", "last": "TOWNSEND", "dob": "1992-11-15", "facility": "Williamson County Detention Facility (Georgetown, TX)"},
 {"first": "ANTHONY", "last": "TRACY", "dob": "1980-06-21", "facility": "Williamson County Detention Facility (Georgetown, TX)"},
 {"first": "KHANH", "last": "TRAN", "dob": "1974-11-04", "facility": "Williamson County Detention Facility (Georgetown, TX)"},
 {"first": "MOSES", "last": "TRASKOS", "dob": "1989-06-23", "facility": "Williamson County Detention Facility (Georgetown, TX)"},
@@ -1731,4 +1731,4 @@ let inmates19 = function inmates19(){return[{"first": "JESSE", "last": "TOWNSEND
 {"first": "TROY ALAN", "last": "WYMER", "dob": "1976-09-16", "facility": "Wise County Detention Center (Decatur, TX)"},
 {"first": "SHIANNE", "last": "YOCOM", "dob": "1992-05-01", "facility": "Wise County Detention Center (Decatur, TX)"},
 {"first": "DELBERT WAYNE", "last": "YOUNG", "dob": "1954-06-28", "facility": "Wise County Detention Center (Decatur, TX)"},
-{"first": "LOUIS SEBATSTIAN", "last": "ZEHNDER", "dob": "1953-09-09", "facility": "Wise County Detention Center (Decatur, TX)"},]};Array.prototype.push.apply(window.allInmates, inmates19());
+{"first": "LOUIS SEBATSTIAN", "last": "ZEHNDER", "dob": "1953-09-09", "facility": "Wise County Detention Center (Decatur, TX)"}]};Array.prototype.push.apply(window.allInmates, addInmatesFn());

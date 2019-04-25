@@ -7,10 +7,14 @@ for f in `ls`
 do
     if [[ "$f" =~ ^inmate* ]] && ! [[ "$f" =~ .js$ ]]
     then
-        startfile="let $f = function $f(){return["
-        endfile="]};Array.prototype.push.apply(window.allInmates, $f());"
+#        startfile="Array.prototype.push.call(window.allInmates,"
+#        endfile="]};Array.prototype.push.apply(window.allInmates, $f());"
+        endfile=");"
+startfile="addInmatesFn = function (){return["
+        endfile="]};Array.prototype.push.apply(window.allInmates, addInmatesFn());"
 
         contents=`cat $f`
+        contents=${contents%?};
         if [ -e "$f.js" ]
         then
             rm "$f.js"

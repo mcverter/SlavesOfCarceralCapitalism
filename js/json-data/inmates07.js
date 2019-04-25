@@ -1,4 +1,4 @@
-let inmates07 = function inmates07(){return[{"first": "CHRISTOPHER ISSAC", "last": "JERKINS", "dob": "1985-11-28", "facility": "Liberty County Jail (Hinesville, GA)"},
+addInmatesFn = function (){return[{"first": "CHRISTOPHER ISSAC", "last": "JERKINS", "dob": "1985-11-28", "facility": "Liberty County Jail (Hinesville, GA)"},
 {"first": "CARID MONIQUE", "last": "JOHNSON", "dob": "1982-06-02", "facility": "Liberty County Jail (Hinesville, GA)"},
 {"first": "JERRY OTIS-LEE", "last": "JOHNSON", "dob": "1992-04-29", "facility": "Liberty County Jail (Hinesville, GA)"},
 {"first": "JOSHUA PATRICK", "last": "JOHNSON", "dob": "1990-07-09", "facility": "Liberty County Jail (Hinesville, GA)"},
@@ -1997,4 +1997,4 @@ let inmates07 = function inmates07(){return[{"first": "CHRISTOPHER ISSAC", "last
 {"first": "JEREMY", "last": "MOORE", "dob": "1994-08-02", "facility": "Livingston Parish Detention Center (Livingston, LA)"},
 {"first": "SHAWN", "last": "MOORE", "dob": "1991-11-24", "facility": "Livingston Parish Detention Center (Livingston, LA)"},
 {"first": "CALEB R", "last": "MORGAN", "dob": "1984-10-04", "facility": "Livingston Parish Detention Center (Livingston, LA)"},
-{"first": "COLBY", "last": "MORGAN", "dob": "1996-07-22", "facility": "Livingston Parish Detention Center (Livingston, LA)"},]};Array.prototype.push.apply(window.allInmates, inmates07());
+{"first": "COLBY", "last": "MORGAN", "dob": "1996-07-22", "facility": "Livingston Parish Detention Center (Livingston, LA)"}]};Array.prototype.push.apply(window.allInmates, addInmatesFn());
