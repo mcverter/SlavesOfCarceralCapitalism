@@ -1,10 +1,9 @@
-.idea/
-foo*
-node_modules/
-*lock
-*log
-env/
 *~
 #*
-notes.txt
-error.*
+*lock
+*log
+foo*
+
+.idea/
+node_modules/
+env/

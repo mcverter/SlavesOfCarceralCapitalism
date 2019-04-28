@@ -1,8 +1,10 @@
 const {Builder, By, Key, until} = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 const Promise = require("bluebird");
+let globalButtonIndex;
+let START_FAC_NUM;
 
-(async function crawlCorrectSolutions() {
+let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityNumber) {
 
   let driver;
   let allFacilities = [];
@@ -49,8 +51,9 @@ const Promise = require("bluebird");
       await this.hitModalContinueButton();
     }
 
-    async chooseYellowOrGreenProduct() {
-      let selectButton = await driver.wait(until.elementLocated(By.className("fa-arrow-circle-right")));
+    async chooseYellowOrGreenProduct(idx) {
+      let selectButtons = await driver.wait(until.elementsLocated(By.className("fa-arrow-circle-right")));
+      let selectButton = selectButtons[idx];
       selectButton.click();
 
       let depositAmount = await driver.wait(until.elementLocated(By.name("deposit")))
@@ -81,21 +84,49 @@ const Promise = require("bluebird");
       /* Confirm Facility */
       await this.hitModalContinueButton();
 
+      let matchRed = (className) => !!(className.match("panel-red"));
       /* figure our what panels we have and their color */
       let panels = await driver.wait(until.elementsLocated(By.className("panel")));
 
-      let firstPanelClass = await panels[0].getAttribute("class");
+      let secondPanelClass,
+        thirdPanelClass,
+        firstPanelClass = await panels[0].getAttribute("class");
 
-      if (firstPanelClass.match("panel-yellow") ||
-        firstPanelClass.match("panel-green")) {
-        await this.chooseYellowOrGreenProduct()
-      } else if (firstPanelClass.match("panel-red")) {
-        await this.chooseRedProduct()
-      } else {
-        console.error("ERROR: no product found???")
+      let isSecondRed,
+        isThirdRed,
+        isFirstRed = matchRed(firstPanelClass);
+
+      if (panels.length>1) {
+        secondPanelClass = await panels[1].getAttribute("class");
+        isSecondRed = matchRed(secondPanelClass)
+      }
+      if (panels.length>2) {
+        thirdPanelClass = await panels[2].getAttribute("class");
+        isThirdRed = matchRed(thirdPanelClass)
       }
 
-      let facilityInfo = `${self.name} (${self.city}, ${self.state})`
+      console.log("color is red", isFirstRed, isSecondRed, isThirdRed)
+      if (isFirstRed && panels.length < 2) {
+        console.log('only one red panel');
+      }
+
+      if (! isFirstRed) {
+        globalButtonIndex = 0;
+        await this.chooseYellowOrGreenProduct(0);
+      } else if (panels.length === 1) {
+        globalButtonIndex = "0red";
+        await this.chooseRedProduct();
+      } else if (! isSecondRed) {
+        globalButtonIndex = 1;
+        await this.chooseYellowOrGreenProduct(1);
+      } else if (! isThirdRed) {
+        globalButtonIndex = 2;
+        await this.chooseYellowOrGreenProduct(2);
+      } else {
+        console.error("Did not press a button");
+      }
+
+      let facilityInfo = `${self.number})`
       await gotoInmateListPage(1, facilityInfo);
     }
 
@@ -107,6 +138,11 @@ const Promise = require("bluebird");
     }
     printJSON(){
       console.log(`{"name": "${this.name}", city: "${this.city}", state: "${this.state}"}`)
+    }
+
+    printSQL(){
+      console.log(`(${this.number},${this.name},${this.city},${this.state})`)
+
     }
 
   }
@@ -128,6 +164,9 @@ const Promise = require("bluebird");
 
     printJSON(){
       console.log(`{"first": "${this.first}", "last": "${this.last}", "dob": "${this.dob}", "facility": "${this.facility}"}`)
+    }
+    printSQL() {
+      console.log(`(${this.first},${this.last},${this.dob},${this.facility})`)
     }
 
   }
@@ -191,11 +230,20 @@ const Promise = require("bluebird");
     await driver.get(`https://csgpay.com/order/select-inmate?page=${pageNum}`);
 
     let right = await driver.findElement(By.className("fa-chevron-right"))
-      .catch(err=>{});
+      .catch(err=>{
+        console.log("error caught:", err);
+        debugger;
+        crawlCorrectSolutions(START_FAC_NUM);
+      });
 
     await extractInmatesFromListPage(pageNum, facilityInfo);
 
-    let grandparentElement = await right.findElement(By.xpath("./../.."));
+    let grandparentElement = await right.findElement(By.xpath("./../.."))
+      .catch(err=>{
+        console.log("error caught:", err);
+        debugger;
+        crawlCorrectSolutions(START_FAC_NUM);
+      });
     let grandparentClass = await grandparentElement.getAttribute("class");
     if (!grandparentClass.match("disabled")) {
       gotoInmateListPage(pageNum+1, facilityInfo)
@@ -204,29 +252,31 @@ const Promise = require("bluebird");
       console.log(`Here are the inmates in ${facilityInfo}`);
       console.log(`======================================\n`);
 
-      allInmates.forEach(i => i.printJSON());
+      allInmates.forEach(i => i.printSQL());
       driver.quit();
       allInmates = allInmates.slice(0, 0);
       let facilityWithInmates = allFacilities.shift();
       if (facilityWithInmates) {
         await facilityWithInmates.findInmatesInFacility();
+        START_FAC_NUM = facilityWithInmates.number;
+        console.log("last processed", START_FAC_NUM)
       }
     }
   }
+
 
   async function handleLastFacilityListPage() {
     /* Last Page Reached. Print Results */
     console.log(`\n\n======================================`);
     console.log("Here are the facilities:");
     console.log(`======================================\n`);
-    allFacilities.forEach(f=>{f.printJSON()});
+    allFacilities.forEach(f=>{f.printSQL()});
 
     driver.quit();
 
-    let TEST_VALUE //= "Jackson Parish Correctional Center - Phase 1";
-    if (TEST_VALUE) {
+    if (startFacilityNumber) {
 //      allFacilities = allFacilities.filter(f => f.number === "" + TEST_VALUE);
-      allFacilities = allFacilities.slice(allFacilities.findIndex(f=>f.name === ""+TEST_VALUE))
+      allFacilities = allFacilities.slice(allFacilities.findIndex(f=>f.number === ""+startFacilityNumber))
     }
 
     // find inmates
@@ -271,7 +321,14 @@ const Promise = require("bluebird");
   /* main */
   await login();
   await gotoFacilityListPage(1, true)
-})();
+});
+
+crawlCorrectSolutions(START_FAC_NUM)
+  .catch(err=>{
+    console.log("error caught:", err);
+    debugger;
+    crawlCorrectSolutions(START_FAC_NUM);
+  });
 
 
 /**
