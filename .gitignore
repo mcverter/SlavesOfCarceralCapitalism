@@ -3,3 +3,8 @@ foo*
 node_modules/
 *lock
 *log
+env/
+*~
+#*
+notes.txt
+error.*
