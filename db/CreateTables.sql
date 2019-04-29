@@ -15,5 +15,5 @@ CREATE TABLE inmates (
     facilityId INTEGER REFERENCES facilities(id),
     entered DATE,
     exited DATE,
-    UNIQUE (firstname, lastname, dob, entered, exited, facilityId)
+    UNIQUE (firstname, lastname, dob, facilityId)
 );
