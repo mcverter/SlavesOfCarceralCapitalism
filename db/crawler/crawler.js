@@ -1,5 +1,4 @@
 const {Builder, By, Key, until} = require('selenium-webdriver');
-const chrome = require('selenium-webdriver/chrome');
 const Promise = require("bluebird");
 let globalButtonIndex;
 let START_FAC_NUM;
@@ -309,7 +308,7 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
 
   async function login() {
     driver = await new Builder()
-      .forBrowser('chrome')
+      .forBrowser('firefox')
 //      .setChromeOptions(new chrome.Options().headless().windowSize(screen))
       .build();
     await driver.get('https://csgpay.com/account/login');
