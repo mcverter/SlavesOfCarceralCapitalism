@@ -1,7 +1,7 @@
 const {Builder, By, Key, until} = require('selenium-webdriver');
 const Promise = require("bluebird");
 let globalButtonIndex;
-let START_FAC_NUM;
+let START_FAC_NUM = 74;
 
 let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityNumber) {
 
