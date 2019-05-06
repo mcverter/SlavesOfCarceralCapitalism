@@ -1,7 +1,7 @@
 const {Builder, By, Key, until} = require('selenium-webdriver');
 const Promise = require("bluebird");
 let globalButtonIndex;
-let START_FAC_NUM = 74;
+let START_FAC_NUM = 14;
 
 let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityNumber) {
 
@@ -104,9 +104,9 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
         isThirdRed = matchRed(thirdPanelClass)
       }
 
-      console.log("color is red", isFirstRed, isSecondRed, isThirdRed)
+//      console.log("color is red", isFirstRed, isSecondRed, isThirdRed)
       if (isFirstRed && panels.length < 2) {
-        console.log('only one red panel');
+//        console.log('only one red panel');
       }
 
       if (! isFirstRed) {
@@ -125,15 +125,18 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
         console.error("Did not press a button");
       }
 
-      let facilityInfo = `${self.number})`
-      await gotoInmateListPage(1, facilityInfo);
+//      let facilityInfo = `${self.number})`
+      await gotoInmateListPage(1, self);
     }
 
     print() {
+      this.printHTML();
+    }
+    printConsole() {
       console.log(`${this.name}\t${this.city}\t${this.state}`)
     }
     printHTML() {
-      console.log(`<tr><td>${this.name}</td><td>${this.city}</td><td>${this.state}</td></tr>`)
+      console.log(`<tr><td>${this.name}</td><td>${this.city}</td><td>${this.state}</td><td><a href="#facility${this.number}-inmates">(See inmates)</a></td></tr>`)
     }
     printJSON(){
       console.log(`{"name": "${this.name}", city: "${this.city}", state: "${this.state}"}`)
@@ -155,10 +158,13 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
     }
 
     print() {
+      this.printHTML();
+    }
+    printConsole() {
       console.log(`${this.first}\t${this.last}\t${this.dob}\t${this.facility}`)
     }
     printHTML() {
-      console.log(`<tr><td>${this.first}</td><td>${this.last}</td><td>${this.dob}</td><td>${this.facility}</td></tr>`)
+      console.log(`<tr><td>${this.first}</td><td>${this.last}</td><td>${this.dob}</td></tr>`)
     }
 
     printJSON(){
@@ -176,7 +182,7 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
     } else {
       let regex = /<tr>.*\n\s*<td>(.*)<.*\n\s*<td>(.*)<.*\n\s*<td>(.*)<.*\n\s*<td>(.*)</;
       let [, , first, last, dob] = rawHtml.match(regex);
-      return new Inmate(first, last, dob, facility);
+      return new Inmate(first, last, dob, facility.number);
     }
   }
 
@@ -207,8 +213,8 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
     return trs;
   }
 
-  async function extractInmatesFromListPage(pageNum, facilityInfo) {
-    console.log(`extracting inmates from ${facilityInfo} on page ${pageNum}`)
+  async function extractInmatesFromListPage(pageNum, facility) {
+//    console.log(`extracting inmates from ${facility.name} on page ${pageNum}`)
     let list = await driver.findElements(By.tagName("tr"));
 
     let trs = await Promise.all(list.map(item => {
@@ -216,7 +222,7 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
       return outerHtml;
     }));
     trs.forEach(async function(tr) {
-      let i = createNewInmate(tr, facilityInfo);
+      let i = createNewInmate(tr, facility);
       if (i) {
         allInmates.push(i);
       }
@@ -225,7 +231,7 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
     return trs;
   }
 
-  async function gotoInmateListPage(pageNum, facilityInfo) {
+  async function gotoInmateListPage(pageNum, facility) {
     await driver.get(`https://csgpay.com/order/select-inmate?page=${pageNum}`);
 
     let right = await driver.findElement(By.className("fa-chevron-right"))
@@ -235,7 +241,7 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
         crawlCorrectSolutions(START_FAC_NUM);
       });
 
-    await extractInmatesFromListPage(pageNum, facilityInfo);
+    await extractInmatesFromListPage(pageNum, facility);
 
     let grandparentElement = await right.findElement(By.xpath("./../.."))
       .catch(err=>{
@@ -245,20 +251,24 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
       });
     let grandparentClass = await grandparentElement.getAttribute("class");
     if (!grandparentClass.match("disabled")) {
-      gotoInmateListPage(pageNum+1, facilityInfo)
+      gotoInmateListPage(pageNum+1, facility)
     } else {
-      console.log(`\n\n======================================`);
-      console.log(`Here are the inmates in ${facilityInfo}`);
-      console.log(`======================================\n`);
 
-      allInmates.forEach(i => i.printSQL());
+      console.log(`<hr />`);
+      console.log(`<a name="facility${facility.number}-inmates"><h2>Here are the inmates in ${facility.name} (${facility.city}, ${facility.city})</h2></a>`);
+      console.log(`<table>`);
+      console.log(`<tr><th>First Name</th><th>Second Name</th><th>Date of Birth</th></tr>`);
+
+
+      allInmates.forEach(i => i.print());
+      console.log("</table>\n")
       driver.quit();
       allInmates = allInmates.slice(0, 0);
       let facilityWithInmates = allFacilities.shift();
       if (facilityWithInmates) {
         await facilityWithInmates.findInmatesInFacility();
         START_FAC_NUM = facilityWithInmates.number;
-        console.log("last processed", START_FAC_NUM)
+//        console.log("last processed", START_FAC_NUM)
       }
     }
   }
@@ -266,10 +276,11 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
 
   async function handleLastFacilityListPage() {
     /* Last Page Reached. Print Results */
-    console.log(`\n\n======================================`);
-    console.log("Here are the facilities:");
-    console.log(`======================================\n`);
-    allFacilities.forEach(f=>{f.printSQL()});
+    console.log("<h1>FACILITY LIST:</h1>");
+    console.log(`<table>`);
+    console.log(`<tr><th>NAME</th><th>CITY</th><th>STATE</th></tr>`);
+    allFacilities.forEach(f=>{f.print()});
+    console.log(`</table>`);
 
     driver.quit();
 
