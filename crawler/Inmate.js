@@ -24,3 +24,5 @@ class Inmate {
   }
 
 }
+
+module.exports = Inmate;

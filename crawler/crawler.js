@@ -2,6 +2,9 @@ const {Builder, By, Key, until} = require('selenium-webdriver');
 const Promise = require("bluebird");
 const process = require('process');
 
+const Facility = require("./Facility");
+const Inmate = require("./Inmate");
+
 let globalButtonIndex;
 let START_FAC_NUM = process.argv[2];
 
@@ -21,7 +24,6 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
       return new Inmate(first, last, dob, facility.number);
     }
   }
-
   function createNewFacility(rawHtml, pageNum) {
     if (rawHtml.match("Select Facility")) {
       return null;
@@ -31,7 +33,6 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
       return new Facility(number,name,city,state, pageNum);
     }
   }
-
   async function extractFacilitiesFromListPage(pageNum) {
     await driver.sleep(2000);
     let list = await driver.findElements(By.tagName("tr"));
@@ -48,7 +49,6 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
     });
     return trs;
   }
-
   async function extractInmatesFromListPage(pageNum, facility) {
 //    console.log(`extracting inmates from ${facility.name} on page ${pageNum}`)
     let list = await driver.findElements(By.tagName("tr"));
@@ -66,7 +66,6 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
 
     return trs;
   }
-
   async function gotoInmateListPage(pageNum, facility) {
     await driver.get(`https://csgpay.com/order/select-inmate?page=${pageNum}`);
 
@@ -102,14 +101,12 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
       allInmates = allInmates.slice(0, 0);
       let facilityWithInmates = allFacilities.shift();
       if (facilityWithInmates) {
-        await facilityWithInmates.findInmatesInFacility();
+        await findInmatesInFacility(facilityWithInmates);
         START_FAC_NUM = facilityWithInmates.number;
 //        console.log("last processed", START_FAC_NUM)
       }
     }
   }
-
-
   async function handleLastFacilityListPage() {
     /* Last Page Reached. Print Results */
     console.log("<h1>FACILITY LIST:</h1>");
@@ -127,7 +124,7 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
 
     // find inmates
     let facilityWithInmates = allFacilities.shift();
-    await facilityWithInmates.findInmatesInFacility();
+    await findInmatesInFacility(facilityWithInmates);
   }
   async function gotoFacilityListPage(pageNum, recursive) {
     await driver.get(`https://csgpay.com/order/select-facility?page=${pageNum}`);
@@ -147,12 +144,114 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
       await handleLastFacilityListPage();
     }
   }
-
   const screen = {
     width: 640,
     height: 480
   };
+  async function hitModalContinueButton() {
+    /* Wait for a long time before pressing button */
+//      await driver.sleep(250);
+    let modal = await driver.wait(until.elementIsVisible(driver.wait(until.elementLocated(By.className("modal-dialog")))));
+    let continueButton = await driver.wait(until.elementIsVisible(driver.wait(until.elementLocated(By.linkText("Continue")))));
+    // let continueButton = modal.findElement(By.linkText("Continue"));
+    await continueButton.click();
+  }
+  async function chooseRedProduct() {
+    /* Click on Product #1 */
+    let selectButton = await driver.wait(until.elementLocated(By.className("fa-arrow-circle-right")));
+    selectButton.click();
 
+    /* pick deposit amount */
+    let depositAmount = await driver.wait(until.elementLocated(By.name("deposit")))
+    await depositAmount.sendKeys('3');
+    let continueDeposit = await driver.wait(until.elementLocated(By.className("btn-success")));
+    continueDeposit.click();
+
+    /* confirm deposit amount */
+    await hitModalContinueButton();
+
+    /* pick pre-paid collect phone */
+    let collectPhoneButton = await driver.wait(until.elementLocated(By.className("funkyradio-primary")));
+    await collectPhoneButton.click();
+
+    /* confirm phone */
+    await hitModalContinueButton();
+  }
+  async function chooseYellowOrGreenProduct(idx) {
+    let selectButtons = await driver.wait(until.elementsLocated(By.className("fa-arrow-circle-right")));
+    let selectButton = selectButtons[idx];
+    selectButton.click();
+
+    let depositAmount = await driver.wait(until.elementLocated(By.name("deposit")))
+    await depositAmount.sendKeys('3')
+    let continueDeposit = await driver.wait(until.elementLocated(By.className("btn-success")));
+    continueDeposit.click();
+
+    await hitModalContinueButton();
+  }
+  async function findInmatesInFacility(facility) {
+    await login();
+
+    /* Go to correct facility list page */
+    await ( driver.get(`https://csgpay.com/order/select-facility?page=${facility.pageNum}`));
+
+    /* Click on the button corresonding to facility */
+    let buttons = await driver.findElements(By.className("glyphicon glyphicon-ok"));
+    let list = await driver.findElements(By.tagName("tr"));
+    if (list.length === buttons.length + 1) {list.shift();}
+    let trs = await Promise.all(list.map(item => item.getAttribute("outerHTML")));
+    let matchFacilityString = trs.filter(e=>e.match(`'${facility.number}'`))[0];
+    let clickIndex = trs.indexOf(matchFacilityString);
+    await buttons[clickIndex].click();
+
+    /* Confirm Facility */
+    await hitModalContinueButton();
+
+    let matchRed = (className) => !!(className.match("panel-red"));
+    /* figure our what panels we have and their color */
+    let panels = await driver.wait(until.elementsLocated(By.className("panel")));
+
+    let secondPanelClass,
+      thirdPanelClass,
+      firstPanelClass = await panels[0].getAttribute("class");
+
+    let isSecondRed,
+      isThirdRed,
+      isFirstRed = matchRed(firstPanelClass);
+
+    if (panels.length>1) {
+      secondPanelClass = await panels[1].getAttribute("class");
+      isSecondRed = matchRed(secondPanelClass)
+    }
+    if (panels.length>2) {
+      thirdPanelClass = await panels[2].getAttribute("class");
+      isThirdRed = matchRed(thirdPanelClass)
+    }
+
+//      console.log("color is red", isFirstRed, isSecondRed, isThirdRed)
+    if (isFirstRed && panels.length < 2) {
+//        console.log('only one red panel');
+    }
+
+    if (! isFirstRed) {
+      globalButtonIndex = 0;
+      await chooseYellowOrGreenProduct(0);
+    } else if (panels.length === 1) {
+      globalButtonIndex = "0red";
+      await chooseRedProduct();
+    } else if (! isSecondRed) {
+      globalButtonIndex = 1;
+      await chooseYellowOrGreenProduct(1);
+    } else if (! isThirdRed) {
+      globalButtonIndex = 2;
+      await chooseYellowOrGreenProduct(2);
+    } else {
+      console.error("Did not press a button");
+    }
+
+//      let facilityInfo = `${facility.number})`
+    await gotoInmateListPage(1, facility);
+  }
   async function login() {
     driver = await new Builder()
       .forBrowser('firefox')
@@ -176,15 +275,3 @@ crawlCorrectSolutions(START_FAC_NUM)
     crawlCorrectSolutions(START_FAC_NUM);
   });
 
-
-/**
- * (node:26896) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 79)
- extracting inmates from Jackson Parish Correctional Center - Phase 1 (Jonesboro, LA) on page 63
- (node:26896) UnhandledPromiseRejectionWarning: TypeError: Cannot read property 'Symbol(Symbol.iterator)' of null
- at createNewInmate (/home/mitchell/ComputerScience_UBUNTU/SlavesOfCarcerelCapitalism/index.js:140:44)
- at /home/mitchell/ComputerScience_UBUNTU/SlavesOfCarcerelCapitalism/index.js:181:15
- at Array.forEach (<anonymous>)
- at extractInmatesFromListPage (/home/mitchell/ComputerScience_UBUNTU/SlavesOfCarcerelCapitalism/index.js:180:9)
- at <anonymous>
-
- */
