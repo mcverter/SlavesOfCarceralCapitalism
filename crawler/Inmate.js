@@ -7,7 +7,7 @@ class Inmate {
   }
 
   print() {
-    return printHTML();
+    return this.printHTML();
   }
   printConsole() {
     return (`${this.first}\t${this.last}\t${this.dob}\t${this.facility}`)

@@ -10,13 +10,13 @@ class Facility {
   }
 
   print() {
-    this.printHTML();
+    return this.printHTML();
   }
   printConsole() {
     return (`${this.name}\t${this.city}\t${this.state}`)
   }
   printHTML() {
-    return (`<tr><td>${this.name}</td><td>${this.city}</td><td>${this.state}</td><td><a href="#facility${this.number}-inmates">(See inmates)</a></td></tr>`)
+    return `\n<tr><td>${this.name}</td><td>${this.city}</td><td>${this.state}</td><td><a href="#facility${this.number}-inmates">(See inmates)</a></td></tr>\n`;
   }
   printJSON(){
     return (`{"name": "${this.name}", city: "${this.city}", state: "${this.state}"}`)

@@ -14,8 +14,9 @@ class InmatePrinter {
             <h2><a name="facility${this.facility.number}-inmates">Here are the inmates in ${this.facility.name} (${this.facility.city}, ${this.facility.state})</a></h2>
             <table>
                 <tr><th>First Name</th><th>Last Name</th><th>Date of Birth</th></tr>`;
-    this.inmates.reduce((accumulator, current) => {
-      accumulator += "n" + current.print();
+    output = this.inmates.reduce((accumulator, current) => {
+      console.log(accumulator, 'current', current)
+      return `${accumulator}\n${current.print()}`;
     }, output);
     output += "</table>\n";
 
