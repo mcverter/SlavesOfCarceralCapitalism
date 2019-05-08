@@ -7,22 +7,21 @@ class Inmate {
   }
 
   print() {
-    this.printHTML();
+    return printHTML();
   }
   printConsole() {
-    console.log(`${this.first}\t${this.last}\t${this.dob}\t${this.facility}`)
+    return (`${this.first}\t${this.last}\t${this.dob}\t${this.facility}`)
   }
   printHTML() {
-    console.log(`<tr><td>${this.first}</td><td>${this.last}</td><td>${this.dob}</td></tr>`)
+    return (`<tr><td>${this.first}</td><td>${this.last}</td><td>${this.dob}</td></tr>`)
   }
 
   printJSON(){
-    console.log(`{"first": "${this.first}", "last": "${this.last}", "dob": "${this.dob}", "facility": "${this.facility}"}`)
+    return (`{"first": "${this.first}", "last": "${this.last}", "dob": "${this.dob}", "facility": "${this.facility}"}`)
   }
   printSQL() {
-    console.log(`(${this.first},${this.last},${this.dob},${this.facility})`)
+    return (`(${this.first},${this.last},${this.dob},${this.facility})`)
   }
-
 }
 
 module.exports = Inmate;

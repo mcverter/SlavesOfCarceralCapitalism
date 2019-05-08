@@ -5,6 +5,9 @@ const fs = require('fs');
 
 const Facility = require("./Facility");
 const Inmate = require("./Inmate");
+const InmatePrinter = require("./InmatePrinter");
+const FacilityPrinter = require("./FacilityPrinter")
+
 
 let globalButtonIndex;
 let START_FAC_NUM = process.argv[2];
@@ -106,23 +109,14 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
     if (!grandparentClass.match("disabled")) {
       gotoInmateListPage(pageNum+1, facility)
     } else {
-
-      let startInmateList = `
-        <hr />
-            <h2><a name="facility${facility.number}-inmates">Here are the inmates in ${facility.name} (${facility.city}, ${facility.state})</a></h2>
-            <table>
-                <tr><th>First Name</th><th>Last Name</th><th>Date of Birth</th></tr>
-`;
-      console.log(startInmateList);
-      allInmates.forEach(i => i.print());
-      console.log("</table>\n")
       driver.quit();
       allInmates = allInmates.slice(0, 0);
       let facilityWithInmates = allFacilities.shift();
       if (facilityWithInmates) {
         await findInmatesInFacility(facilityWithInmates);
+        let inmatePrinter = new InmatePrinter(facilityWithInmates, allInmates);
+        inmatePrinter.printOutInmates(facilityWithInmates, allInmates);
         START_FAC_NUM = facilityWithInmates.number;
-//        console.log("last processed", START_FAC_NUM)
       }
     }
   }
@@ -164,12 +158,6 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
       thirdPanelClass = await panels[2].getAttribute("class");
       isThirdRed = matchRed(thirdPanelClass)
     }
-
-//      console.log("color is red", isFirstRed, isSecondRed, isThirdRed)
-    if (isFirstRed && panels.length < 2) {
-//        console.log('only one red panel');
-    }
-
     if (! isFirstRed) {
       globalButtonIndex = 0;
       await chooseYellowOrGreenProduct(0);
@@ -195,16 +183,8 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
   }
   async function exitFacilityListPages() {
     /* Last Page Reached. Print Results */
-    let listStart = `
-      <h1>FACILITY LIST:</h1>
-      <table>
-          <tr><th>NAME</th><th>CITY</th><th>STATE</th></tr>`;
-    console.log(listStart);
-
-    allFacilities.forEach(f=>{f.print()});
-    let listEnd = `
-      </table>`;
-    console.log(listEnd);
+    let facilityPrinter = new FacilityPrinter(allFacilities);
+    facilityPrinter.printOutFacilities();
 
     driver.quit();
 
@@ -217,6 +197,8 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
     let facilityWithInmates = allFacilities.shift();
     await findInmatesInFacility(facilityWithInmates);
   }
+
+
   async function gotoFacilityListPage(pageNum, recursive) {
     await driver.get(`https://csgpay.com/order/select-facility?page=${pageNum}`);
 

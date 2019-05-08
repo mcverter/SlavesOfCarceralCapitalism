@@ -13,20 +13,18 @@ class Facility {
     this.printHTML();
   }
   printConsole() {
-    console.log(`${this.name}\t${this.city}\t${this.state}`)
+    return (`${this.name}\t${this.city}\t${this.state}`)
   }
   printHTML() {
-    console.log(`<tr><td>${this.name}</td><td>${this.city}</td><td>${this.state}</td><td><a href="#facility${this.number}-inmates">(See inmates)</a></td></tr>`)
+    return (`<tr><td>${this.name}</td><td>${this.city}</td><td>${this.state}</td><td><a href="#facility${this.number}-inmates">(See inmates)</a></td></tr>`)
   }
   printJSON(){
-    console.log(`{"name": "${this.name}", city: "${this.city}", state: "${this.state}"}`)
+    return (`{"name": "${this.name}", city: "${this.city}", state: "${this.state}"}`)
   }
 
   printSQL(){
-    console.log(`(${this.number},${this.name},${this.city},${this.state})`)
-
+    return (`(${this.number},${this.name},${this.city},${this.state})`)
   }
-
 }
 
 module.exports = Facility;
