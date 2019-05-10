@@ -115,7 +115,7 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
       if (facilityWithInmates) {
         await findInmatesInFacility(facilityWithInmates);
         let inmatePrinter = new InmatePrinter(facilityWithInmates, allInmates);
-        inmatePrinter.printOutInmates(facilityWithInmates, allInmates);
+        inmatePrinter.printInmatesTable(facilityWithInmates, allInmates);
         START_FAC_NUM = facilityWithInmates.number;
       }
     }
@@ -184,7 +184,7 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
   async function exitFacilityListPages() {
     /* Last Page Reached. Print Results */
     let facilityPrinter = new FacilityPrinter(allFacilities);
-    facilityPrinter.printOutFacilities();
+    facilityPrinter.printFacilitiesTable();
 
     driver.quit();
 
@@ -216,16 +216,6 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
     } else {
       await exitFacilityListPages();
     }
-  }
-  async function writeOutFacilityPage(facility) {
-    let contents = `"Hey there!"`;
-    fs.writeFile(`./facility${facility.number}.html`, contents, function(err) {
-      if(err) {
-        return console.log(err);
-      }
-
-      console.log("The file was saved!");
-    });
   }
 
   /* Modals */
