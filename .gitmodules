@@ -1,0 +1,3 @@
+[submodule "crawler/busquedas/crawler/busquedas/ice_locator"]
+	path = crawler/busquedas/crawler/busquedas/ice_locator
+	url = https://github.com/mcverter/ice_locator
