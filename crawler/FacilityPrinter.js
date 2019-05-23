@@ -1,6 +1,5 @@
 const fs = require('fs');
 
-
 class FacilityPrinter {
   constructor(facilities) {
     this.facilities = facilities;

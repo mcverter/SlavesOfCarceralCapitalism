@@ -18,8 +18,47 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
   let allFacilities = [];
   let allInmates = [];
 
+  /**
+   *
+   * @param pageNum
+   * @param facility
+   * @returns {Promise<void>}
+   */
+  async function navigateToInmates(pageNum, facility) {
+    await driver.get(`https://csgpay.com/order/select-inmate?page=${pageNum}`);
 
+    let right = await driver.findElement(By.className("fa-chevron-right"))
+      .catch(err=>{
+        console.log("error caught:", err);
+        debugger;
+        crawlCorrectSolutions(START_FAC_NUM);
+      });
 
+    await readInmates(pageNum, facility);
+
+    let grandparentElement = await right.findElement(By.xpath("./../.."))
+      .catch(err=>{
+        console.log("error caught:", err);
+        debugger;
+        crawlCorrectSolutions(START_FAC_NUM);
+      });
+    let grandparentClass = await grandparentElement.getAttribute("class");
+    let isLastPage = !grandparentClass.match("disabled");
+
+    if (isLastPage) {
+      navigateToInmates(pageNum+1, facility)
+    } else {
+      driver.quit();
+      allInmates = allInmates.slice(0, 0);
+      let facilityWithInmates = allFacilities.shift();
+      if (facilityWithInmates) {
+        await findInmatesInFacility(facilityWithInmates);
+        let inmatePrinter = new InmatePrinter(facilityWithInmates, allInmates);
+        inmatePrinter.printInmatesTable(facilityWithInmates, allInmates);
+        START_FAC_NUM = facilityWithInmates.number;
+      }
+    }
+  }
   /**
    *
    * @param pageNum
@@ -28,7 +67,7 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
 
    Extracting inmates from ${facility.name} on page ${pageNum}
    */
-  async function createInmatesFromListPage(pageNum, facility) {
+  async function readInmates(pageNum, facility) {
     let list = await driver.findElements(By.tagName("tr"));
 
     let trs = await Promise.all(list.map(item => {
@@ -59,7 +98,7 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
    * @param pageNum
    * @returns {Promise<*>}
    */
-  async function createFacilitiesFromListPage(pageNum) {
+  async function readFacilities(pageNum) {
     await driver.sleep(2000);
     let list = await driver.findElements(By.tagName("tr"));
     let buttons = await driver.findElements(By.className("glyphicon glyphicon-ok"));
@@ -74,6 +113,13 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
       }
     });
     return trs;
+
+    /**
+     *
+     * @param rawHtml
+     * @param pageNum
+     * @returns {*}
+     */
     function createNewFacility(rawHtml, pageNum) {
       if (rawHtml.match("Select Facility")) {
         return null;
@@ -83,43 +129,8 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
         return new Facility(number,name,city,state, pageNum);
       }
     }
-
   }
 
-
-  async function gotoInmateListPage(pageNum, facility) {
-    await driver.get(`https://csgpay.com/order/select-inmate?page=${pageNum}`);
-
-    let right = await driver.findElement(By.className("fa-chevron-right"))
-      .catch(err=>{
-        console.log("error caught:", err);
-        debugger;
-        crawlCorrectSolutions(START_FAC_NUM);
-      });
-
-    await createInmatesFromListPage(pageNum, facility);
-
-    let grandparentElement = await right.findElement(By.xpath("./../.."))
-      .catch(err=>{
-        console.log("error caught:", err);
-        debugger;
-        crawlCorrectSolutions(START_FAC_NUM);
-      });
-    let grandparentClass = await grandparentElement.getAttribute("class");
-    if (!grandparentClass.match("disabled")) {
-      gotoInmateListPage(pageNum+1, facility)
-    } else {
-      driver.quit();
-      allInmates = allInmates.slice(0, 0);
-      let facilityWithInmates = allFacilities.shift();
-      if (facilityWithInmates) {
-        await findInmatesInFacility(facilityWithInmates);
-        let inmatePrinter = new InmatePrinter(facilityWithInmates, allInmates);
-        inmatePrinter.printInmatesTable(facilityWithInmates, allInmates);
-        START_FAC_NUM = facilityWithInmates.number;
-      }
-    }
-  }
   async function findInmatesInFacility(facility) {
     await login();
 
@@ -173,13 +184,10 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
     } else {
       console.error("Did not press a button");
     }
-
-//      let facilityInfo = `${facility.number})`
-//    await gotoInmateListPage(1, facility);
     await enterFacilityListPages(facility);
   }
   async function enterFacilityListPages(facility){
-    await gotoInmateListPage(1, facility);
+    await navigateToInmates(1, facility);
   }
   async function exitFacilityListPages() {
     /* Last Page Reached. Print Results */
@@ -197,15 +205,13 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
     let facilityWithInmates = allFacilities.shift();
     await findInmatesInFacility(facilityWithInmates);
   }
-
-
   async function gotoFacilityListPage(pageNum, recursive) {
     await driver.get(`https://csgpay.com/order/select-facility?page=${pageNum}`);
 
     let right = await driver.findElement(By.className("fa-chevron-right"))
       .catch(err=>{});
 
-    await createFacilitiesFromListPage(pageNum);
+    await readFacilities(pageNum);
 
     let grandparentElement = await right.findElement(By.xpath("./../.."));
     let grandparentClass = await grandparentElement.getAttribute("class");
@@ -217,6 +223,16 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
       await exitFacilityListPages();
     }
   }
+
+
+
+
+
+
+
+
+
+
 
   /* Modals */
   async function hitModalContinueButton() {

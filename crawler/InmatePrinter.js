@@ -10,6 +10,7 @@ class InmatePrinter {
 
   }
   printInmatesTable(){
+    debugger;
     let inmatesTable = `
         <hr />
             <h2><a name="facility${this.facility.number}-inmates">Here are the inmates in ${this.facility.name} (${this.facility.city}, ${this.facility.state})</a></h2>
@@ -23,6 +24,7 @@ class InmatePrinter {
   }
 
   writeInmatesPage(inmatesTable){
+    debugger
     let {name, city, state, number} = this.facility;
     let completeInmatesPage = `    
 <html>
@@ -30,9 +32,13 @@ class InmatePrinter {
 <title>Inmates in ${name} (${city}, ${state})</title>
 </head>
 <body>
+<a href="facilities.html" target="_blank"> See all Detention Facilities </a>
+
     <h1>Inmates in ${name} (${city}, ${state})</h1>
     
     ${inmatesTable}
+
+<a href="facilities.html" target="_blank"> See all Detention Facilities </a>
 
 </body>    
 </html>
