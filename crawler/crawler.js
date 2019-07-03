@@ -139,7 +139,11 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
     let trs = await Promise.all(list.map(item => item.getAttribute("outerHTML")));
     let matchFacilityString = trs.filter(e=>e.match(`'${facility.number}'`))[0];
     let clickIndex = trs.indexOf(matchFacilityString);
-    await buttons[clickIndex].click();
+    await buttons[clickIndex].click().catch(err=>{
+      console.log("error caught:", err);
+      debugger;
+      crawlCorrectSolutions(START_FAC_NUM);
+    });
 
     /* Confirm Facility */
     await hitModalContinueButton();
@@ -221,7 +225,11 @@ let crawlCorrectSolutions = (async function crawlCorrectSolutions(startFacilityN
     await driver.get(`https://csgpay.com/order/select-facility?page=${pageNum}`);
 
     let right = await driver.findElement(By.className("fa-chevron-right"))
-      .catch(err=>{});
+      .catch(err=>{
+        console.log("error caught:", err);
+        debugger;
+        crawlCorrectSolutions(START_FAC_NUM);
+      });
 
     await createFacilitiesFromListPage(pageNum);
 
