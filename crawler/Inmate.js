@@ -6,6 +6,9 @@ class Inmate {
     this.facility = facility;
   }
 
+  insertDB() {
+
+  }
   print() {
     this.printHTML();
   }

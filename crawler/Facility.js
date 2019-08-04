@@ -9,6 +9,8 @@ class Facility {
     this.homepage = `https://csgpay.com/order/facility/${number}/product/2/select-inmate`
   }
 
+  insertDB() {}
+
   print() {
     this.printHTML();
   }
